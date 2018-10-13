@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+
+    <title>Leaderboards</title>
+
+        <meta name="description" content="">
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+            <script src="js/jquery.slim.min.js"></script>
+            <script src="js/popper.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+
+        <link rel="icon" href="https://accreu.com/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="css/bootstrap_theme.min.css"/>
+        <link rel="stylesheet" href="css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="css/fixed_menu.css"/>
+        <link rel="stylesheet" href="css/style.css">
+
+        <div class="title-bar">
+            <div id="title-bar-btns">
+                <button id="close-btn">X</button>
+                <button id="max-btn">▢</button>
+                <button id="min-btn">−</button>
+            </div>
+        </div>
+
+        <div class="some_space" style="height:50px;"></div>
+
+    </head>
+    <body style="background-color:#36393e">
+
+        <div class="searchBar">
+            <form id="searchform">
+                <input type="text" id="searchText" placeholder="Search">
+            </form>
+        </div>
+
+        <div class="searchresultsbox" id="searchbackground">
+            <ul class="searchresults" id='serchList'></ul>
+        </div>
+
+        <div class="slide-container" id="layout">
+
+            <div class="slide sr_fade">
+                <div class="infodisplay" id="infodisplay_anim" style="display: none;">
+                    <h1 class="mapname" id="mapname1"></h1>
+                    <h1 class="mapway">190 NS</h1>
+                    <img class="mapimage"  id="mapimage1">
+                    <img class="top1" src="images/1st.png">
+                    <img class="top2" src="images/2nd.png">
+                    <img class="top3" src="images/3rd.png">
+                    <table class="playerTimesTable" id="name1900"></table>
+                </div>
+            </div>
+            <div class="slide sr_fade">
+                <div class="infodisplay">
+                    <h1 class="mapname" id="mapname2"></h1>
+                    <h1 class="mapway">210 NS</h1>
+                    <img class="mapimage"  id="mapimage2">
+                    <img class="top1" src="images/1st.png">
+                    <img class="top2" src="images/2nd.png">
+                    <img class="top3" src="images/3rd.png">
+                    <table class="playerTimesTable" id="name2100"></table>
+                </div>
+            </div>
+            <div class="slide sr_fade">
+                <div class="infodisplay">
+                    <h1 class="mapname" id="mapname3"></h1>
+                    <h1 class="mapway">190 S</h1>
+                    <img class="mapimage"  id="mapimage3">
+                    <img class="top1" src="images/1st.png">
+                    <img class="top2" src="images/2nd.png">
+                    <img class="top3" src="images/3rd.png">
+                    <table class="playerTimesTable" id="name1901"></table>
+                </div>
+            </div>
+            <div class="slide sr_fade">
+                <div class="infodisplay">
+                    <h1 class="mapname" id="mapname4"></h1>
+                    <h1 class="mapway">210 S</h1>
+                    <img class="mapimage"  id="mapimage4">
+                    <img class="top1" src="images/1st.png">
+                    <img class="top2" src="images/2nd.png">
+                    <img class="top3" src="images/3rd.png">
+                    <table class="playerTimesTable" id="name2101"></table>
+                </div>
+            </div>
+
+        </div>
+
+        <button type="button" class="btn btn-secondary" onclick="plusSlides(-1)" id="sr_prev" style="display: none;">Prev</button>
+        <button type="button" class="btn btn-secondary" onclick="plusSlides(1)" id="sr_next" style="display: none;">Next</button>
+            
+            <div class="navbar">
+                <a class="navtext" href="home.html">Home</a>
+                <a class="navtext" href="leaderboard.html">Leaderboards</a>
+                <a class="navtext" href="players.html">Player PB</a>
+                <a class="navtext" href="servers.html">Servers</a>
+            </div>
+
+        <script src="js/slideshow.js"></script>
+        <script src="js/maptimes.js"></script>
+        <script src="js/topbuttons.js"></script>
+        
+
+    </body>
+</html>

@@ -1,0 +1,32 @@
+@import url("../fonts/stylesheet.css");
+
+.navbar 
+{
+    overflow: hidden;
+    background-color: #202122;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+
+.navbar a 
+{
+    float: left;
+    display: block;
+    color: #e9ecef;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: BankGothic;
+}
+
+.navbar a:hover 
+{
+    background: #202122;
+    color: e9ecef;
+}
+
+.main 
+{
+    margin-top: 30px;
+} 

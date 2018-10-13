@@ -1,0 +1,11 @@
+@font-face {
+    font-family: BankGothic;
+    src: url(bankgothic-md-bt-medium-webfont.eot);
+    src: url(bankgothic-md-bt-medium-webfont.eot?#iefix) format('eot'),
+         url(bankgothic-md-bt-medium-webfont.woff) format('woff'),
+         url(bankgothic-md-bt-medium-webfont.ttf) format('truetype'),
+         url(bankgothic-md-bt-medium-webfont.svg#webfontc0f9s3aJ) format('svg');
+    font-weight: bold;
+    font-style: normal;
+
+}

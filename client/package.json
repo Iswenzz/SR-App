@@ -1,0 +1,25 @@
+{
+  "name": "speedrunclient",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . speedrun-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"speedrun-app\"",
+    "package-linux": "electron-packager . speedrun-app --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dialogs": "^1.1.20",
+    "electron": "^2.0.3",
+    "execSync": "^1.0.2",
+    "opn": "^5.3.0",
+    "ws": "^5.2.0",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^12.1.0"
+  }
+}

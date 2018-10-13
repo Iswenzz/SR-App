@@ -1,0 +1,470 @@
+body
+{
+    background: #36393e;
+    margin: 0px;
+    height: 100%;
+}
+
+html
+{
+    height: 100%;
+}
+
+html 
+{ 
+    overflow-y: visible; 
+}
+
+::-webkit-scrollbar 
+{
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track 
+{
+    background: #3e4147;
+}
+ 
+::-webkit-scrollbar-thumb 
+{
+     background: #5b5f66;
+}
+
+.title-bar 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    -webkit-app-region: drag;
+    cursor: move;
+    background-color: #202122;
+    z-index:2;
+}
+
+#title-bar-btns 
+{
+    -webkit-app-region: no-drag;
+    position: fixed;
+    top: 0px;
+    right: 6px;
+    z-index:3;
+}
+
+#close-btn 
+{
+    cursor:pointer;
+    width: 20px;
+    height: auto;
+    background-color: #202225;
+    color: #e9ecef;
+    border: solid 1px #202225;
+    text-align: center;
+    float: right;
+    padding: 3px;
+    border-radius: 3px;
+    line-height: 70%;
+}
+
+#close-btn:hover
+{
+    background-color: red;
+}
+
+#max-btn 
+{
+    cursor:pointer;
+    width: 20px;
+    height: auto;
+    background-color: #202225;
+    color: #e9ecef;
+    border: solid 1px #202225;
+    text-align: center;
+    float: right;
+    padding: 3px;
+    border-radius: 3px;
+    line-height: 70%;
+}
+
+#max-btn:hover
+{
+    background-color: red;
+}
+
+#min-btn 
+{
+    cursor:pointer;
+    width: 20px;
+    height: auto;
+    background-color: #202225;
+    color: #e9ecef;
+    border: solid 1px #202225;
+    text-align: center;
+    float: right;
+    padding: 3px;
+    border-radius: 3px;
+    line-height: 70%;
+}
+
+#min-btn:hover
+{
+    background-color: red;
+}
+
+.searchBar
+{
+    width: 98.5%;
+    margin: 10px;
+}
+
+.searchBar input[type=text]
+{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    background: #505050;
+    border-bottom: 2px solid #6b6b6b;
+    color: #fff;
+    text-align: center;
+}
+
+.searchBar input[type=text]:focus
+{
+    border: none;
+    border-bottom: 2px solid #5d00d6;
+    outline: none;
+}
+
+.searchresults
+{
+    color: #fff;
+    columns: 1;
+    -webkit-columns: 1;
+    -moz-columns: 1;
+    list-style-type: none;
+    text-align: center;
+    font-family: BankGothic;
+    padding: 0px;
+    margin: 10px;
+    background: #46494d;
+}
+
+.searchresults li:nth-of-type(1n+11)
+{
+    display: none;
+}
+
+.searchresults li
+{
+    padding: 2px;
+    background-color: 404246;
+}
+
+.searchresults a:link, .searchresults a:visited
+{
+    color:white;
+    text-decoration:none;
+    font-size: 20px;
+}
+
+.searchresults a:hover
+{
+    color: #5d00d6;
+}
+
+.searchresultsbox
+{
+    display: none;
+    position: absolute;
+    width: 98.5%;
+    margin: 10px;
+    top: 120px;
+    padding: 0px;
+    z-index: 6;
+}
+
+@import url("../fonts/stylesheet.css");
+
+.row:after 
+{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#sr_next
+{
+    text-align: center;
+    font-size: 15px;
+    font-family: BankGothic;
+    float:center;
+    margin: 0px;
+    margin-left: 7%;
+    margin-bottom: 10px;
+    position: absolute;
+    left: 150px;
+    top: 600px;
+}
+
+#sr_prev
+{
+    text-align: center;
+    font-size: 15px;
+    font-family: BankGothic;
+    float:center;
+    margin: 0px;
+    margin-left: 7%;
+    margin-bottom: 10px;
+    position: absolute;
+    left: 50px;
+    top: 600px;
+}
+
+.mapway
+{
+    text-align: center;
+    font-size: 30px;
+    font-family: BankGothic;
+    float:center;
+    margin: 0px;
+    margin-left: 7%;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 60px;
+    left: -50px;
+    top: 400px;
+}
+
+.mapname
+{
+    text-align: center;
+    font-family: BankGothic;
+    font-size: 30px;
+    float: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 10px;
+    position: absolute;
+    left: -200px;
+    top: 350px;
+}
+
+.mapimage
+{
+    width: 400px;
+    height: 250px;
+    float: right;
+    margin-right: 10%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    position: absolute;
+    left: -100px;
+    top: 50px;
+}
+
+.top1
+{
+    position: relative;
+    right: -190px;
+    top: 7px;
+    width: 32px;
+    height: 32px;
+}
+
+.top2
+{
+    position: relative;
+    right: -153px;
+    top: 45px;
+    width: 32px;
+    height: 32px;
+}
+
+.top3
+{
+    position: relative;
+    right: -116px;
+    top: 85px;
+    width: 32px;
+    height: 32px;
+}
+
+.playertimes
+{
+    margin-left: 30px;
+}
+
+.sr_wayname
+{
+    position: relative;
+    color: white;
+    font-family: BankGothic;
+}
+
+.infodisplay
+{
+    margin: auto;
+    color: white;
+    width: 70%;
+    overflow: visible;
+    min-height:800px;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+}
+
+.infodisplay ul
+{
+    list-style-type: none;
+    padding: 5px;
+    text-align: left;
+}
+
+.infodisplay li
+{
+    padding-bottom: 1px;
+}
+
+.slide-container
+{
+    display: block;
+    position: relative;
+    margin: auto;
+    width: 80%;
+}
+.slide
+{
+    display: none;
+    position: relative;
+}
+
+.sr_fade  
+{
+  -webkit-animation-name: sr_fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: sr_fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes sr_fade 
+{
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes sr_fade 
+{
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+.playerTimesTable
+{
+    position: relative;
+    right: -230px;
+    width: 100%;
+    margin: auto;
+    top: -30px;
+}
+
+.playerTimesTable tr
+{
+    border-collapse: collapse;
+    font-family: BankGothic;
+}
+
+.playerTimesTable th
+{
+    border-bottom: 2px solid #d3d3d3;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+    font-family: BankGothic;
+}
+
+.playerTimesTable td
+{
+    text-align: center;   
+    border-bottom: papayawhip;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    font-family: BankGothic;
+}
+
+.playerTimesTable tr:nth-child(even)
+{
+    background: #36393e;
+}
+.playerTimesTable tr:nth-child(odd)
+{
+    background: #4f5358;
+}
+
+.playerTimesTable_pb
+{
+    position: relative;
+    right: 0px;
+    width: 100%;
+    margin: auto;
+    top: -30px;
+}
+
+.playerTimesTable_pb tr
+{
+    border-collapse: collapse;
+    font-family: BankGothic;
+}
+
+.playerTimesTable_pb th
+{
+    border-bottom: 2px solid #d3d3d3;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+    font-family: BankGothic;
+}
+
+.playerTimesTable_pb td
+{
+    text-align: center;   
+    border-bottom: papayawhip;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    font-family: BankGothic;
+}
+
+.playerTimesTable_pb tr:nth-child(even)
+{
+    background: #36393e;
+}
+.playerTimesTable_pb tr:nth-child(odd)
+{
+    background: #4f5358;
+}
+
+.tableName
+{
+    width: 50%;
+}
+
+.tableTime
+{
+    width: 30%;
+}
+
+.footer
+{
+    position: fixed;
+    bottom: 0px;
+    margin: 5px;
+    float:right;
+}
+.footer p1
+{
+    color: white;
+}
+
+#playerlink:link
+{
+    color: #c9a0ff;
+}
