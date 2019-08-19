@@ -7,7 +7,8 @@ var ws;
 const { app, BrowserWindow, Menu, ipcMain, webContents} = electron;
 let mainWindow;
 let addWindow;
-process.env.NODE_ENV = 'production';
+// process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'debug';
 
 // ----------------------------------------------------
 // --------------------- UPDATES ----------------------
@@ -135,6 +136,7 @@ app.on('ready', () =>
         app.quit();
     });
 
+    mainWindow.webContents.openDevTools();
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     Menu.setApplicationMenu(mainMenu);
 });
@@ -232,11 +234,9 @@ if(process.env.NODE_ENV != 'production')
         [{
             label: 'Toggle DevTools',
             accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
-            
             click(item, focusedWindow){
                 focusedWindow.toggleDevTools();
             }
-
         },
         {
             role: 'reload'

@@ -15,7 +15,9 @@
     "dialogs": "^2.0.1",
     "electron": "^2.0.18",
     "execSync": "^1.0.2",
+    "jquery": "^3.4.1",
     "opn": "^5.3.0",
+    "particles.js": "^2.0.0",
     "ws": "^5.2.2",
     "xmlhttprequest": "^1.8.0"
   },

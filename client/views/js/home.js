@@ -1,8 +1,3 @@
-const opn = require('opn');
+const path = require('path');
 
-element.addEventListener("click", goToLink);
-
-function goToLink(link) 
-{
-    opn(link);
-} 
+particlesJS.load('particles-js', 'json/particles.json');

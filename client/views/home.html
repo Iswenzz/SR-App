@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-    	<title>Home</title>
+		<title>Home</title>
+		
 		<meta name="description" content="">
 		<meta charset="utf-8">
-
-		<link rel="icon" href="https://accreu.com/favicon.ico" type="image/x-icon">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
-
-		<script src="js/jquery.slim.min.js"></script>
-		<script src="js/popper.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
 
 		<link rel="stylesheet" href="css/bootstrap_theme.min.css"/>
 		<link rel="stylesheet" href="css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="css/fixed_menu.css"/>
 		<link rel="stylesheet" href="css/home.css"/>
 		<link rel="stylesheet" href="css/w3.css"/>
+
+		<script src="js/packages/jquery.min.js"></script>
+		<script src="js/packages/bootstrap.min.js"></script>
 
 		<div class="title-bar">
 			<div id="title-bar-btns">
@@ -27,10 +25,13 @@
 				<button id="min-btn">−</button>
 			</div>
 		</div>
+		
+		<div style="height: 50px;"></div>
   	</head>
-	<body data-spy="scroll" data-target="#quick-nav" style="background-color:#36393e">
-    
+	<body data-spy="scroll" data-target="#quick-nav">
 		<div w3-include-html="http://213.32.18.205:1337/speedrun_app/views/z_home.html"></div>
+
+		<div id="particles-js"></div>
 
 		<div class="navbar">
 			<a class="navtext" href="home.html">Home</a>
@@ -38,11 +39,12 @@
 			<a class="navtext" href="players.html">Player PB</a>
 			<a class="navtext" href="servers.html">Servers</a>
 		</div>
-                            
-        <script src="js/home.js"></script>
-        <script src="js/topbuttons.js"></script>
+		
+		<script src="js/packages/particles.js"></script>
         <script src="js/youtube.js"></script>
 		<script src="js/include.js"></script>
+		<script src="js/home.js"></script>
+		<script src="js/topbuttons.js"></script>
 		
 	</body>
 </html>

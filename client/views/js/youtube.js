@@ -25,11 +25,6 @@ function onPlayerStateChange(e)
         if ('mainPlayer' === frm.attr('id')) 
             player.playVideo();
     }
-    if (e.data === YT.PlayerState.BUFFERING) 
-    {
-        if ('mainPlayer' === frm.attr('id'))
-            setPlaybackQuality('hd720');
-    }
 }
 
 function onPlayerReady(e) 
