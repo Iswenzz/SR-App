@@ -5,28 +5,30 @@ const link = document.getElementById('searchLink');
 const searchBox = document.getElementById('searchform')
 const background = document.getElementById("searchbackground");
 
-ipcRenderer.on('search:results', function(e, item)
+ipcRenderer.on('search:results', (e, item) =>
 {
     const li = document.createElement('li');
     var a = document.createElement('a');
     const itemText = document.createTextNode(item);
+
     a.appendChild(itemText);
     a.href = "#";
     a.id = "searchLink";
+
     li.appendChild(a);
     ul.appendChild(li);
 });
 
-ipcRenderer.on('maptimes', function(e,item)
+ipcRenderer.on('maptimes', (e,item) =>
 {
     var tkn = item.split("\\");
 
-    if(tkn.length < 5)
+    if (tkn.length < 5)
         return;
       
     var names = document.getElementById("name" + tkn[0] + tkn[1]);
 
-    if(names.innerHTML == "")
+    if (names.innerHTML == "")
     {
         var header = document.createElement('tr');
         var headerName = document.createElement('th');
@@ -72,52 +74,50 @@ ipcRenderer.on('maptimes', function(e,item)
     names.appendChild(table);
 });
 
-ipcRenderer.on('times:clear', function ()
+ipcRenderer.on('times:clear', () =>
 {
     var ids = ["name1900", "name1901", "name2100", "name2101"]
 
-    for(i = 0; i<ids.length; i++)
-    {
+    for (i = 0; i < ids.length; i++)
         document.getElementById(ids[i]).innerHTML = "";
-    }
 });
 
 function getRealTime(time)
 {
     var original = time;
     var miliseconds = time;
-    var minutes = parseInt(time/60000);
-    miliseconds = parseInt(miliseconds%60000);
-    var seconds = parseInt(miliseconds/1000);
-    miliseconds = parseInt(miliseconds%1000);
+    var minutes = parseInt(time / 60000);
+    miliseconds = parseInt(miliseconds % 60000);
+    var seconds = parseInt(miliseconds / 1000);
+    miliseconds = parseInt(miliseconds % 1000);
     return minutes + ":" + seconds + ":" + miliseconds;
 }
 
-ipcRenderer.on('search:clear', function() 
+ipcRenderer.on('search:clear', () =>
 {
     ul.innerHTML = '';
 });
 
-searchBox.onkeyup = function(e)
+searchBox.onkeyup = (e) =>
 {
     var item = document.querySelector('#searchText').value;
 
-    if(item != "" && item.length < 30)
+    if (item != "" && item.length < 30)
     {
         ipcRenderer.send('search:mapTimes', item);
         background.style.display = "block";
     }
 
-    if(item == "")
+    if (item == "")
     {
         ul.innerHTML = '';
         background.style.display = "none";
     }
 }
 
-ul.addEventListener('click', function(e)
+ul.addEventListener('click', (e) =>
 {
-    if(e.target.id == "searchLink")
+    if (e.target.id == "searchLink")
     {
         ipcRenderer.send('getmap', e.target.innerHTML);
         ul.innerHTML = '';
@@ -143,7 +143,7 @@ ul.addEventListener('click', function(e)
         document.getElementById("mapname3").appendChild(document.createTextNode(e.target.innerHTML));
         document.getElementById("mapname4").appendChild(document.createTextNode(e.target.innerHTML));
 
-        if(!FileTest("http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + e.target.innerHTML + ".jpg")) 
+        if (!FileTest("http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + e.target.innerHTML + ".jpg")) 
         {
             document.getElementById("mapimage1").src = "images/loadscreen_not_found.jpg";
             document.getElementById("mapimage2").src = "images/loadscreen_not_found.jpg";
@@ -160,12 +160,7 @@ function FileTest(url)
     xhr.send();
      
     if (xhr.status == "404") 
-    {
         return false;
-    } 
-
     else 
-    {
         return true;
-    }
 }

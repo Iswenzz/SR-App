@@ -4,33 +4,30 @@ const searchBox = document.getElementById('searchform')
 const ul = document.getElementById('serchList');
 const background = document.getElementById("searchbackground");
 
-(function () 
-{
-    var hash = document.URL.substring(document.URL.indexOf("#") + 1);
+var hash = document.URL.substring(document.URL.indexOf("#") + 1);
 
-    if (hash.length != 0) 
-    {
-        ipcRenderer.send('getplayer', hash);
-    }
-})();
+if (hash.length != 0) 
+    ipcRenderer.send('getplayer', hash);
 
-ipcRenderer.on('search:playerid', function (e, item) 
+ipcRenderer.on('search:playerid', (e, item) =>
 {
     const li = document.createElement('li');
     var a = document.createElement('a');
     const itemText = document.createTextNode(item);
+
     a.appendChild(itemText);
     a.href = "#";
     a.id = "searchLink";
+
     li.appendChild(a);
     ul.appendChild(li);
 });
 
-ipcRenderer.on("playertimes", function(e, item)
+ipcRenderer.on("playertimes", (e, item) =>
 {
     var tkn = item.split("\\")
 
-    if(tkn.length < 7)
+    if (tkn.length < 7)
         return;
     
     var table = document.getElementById("playertimes")
@@ -57,9 +54,9 @@ ipcRenderer.on("playertimes", function(e, item)
     var maptkn = tkn[0].split("_");
     var mapName = "";
 
-    for(var i = 0; i<maptkn.length-2; i++)
+    for (let i = 0; i < maptkn.length-2; i++)
     {
-        if(i != maptkn.length-3)
+        if (i != maptkn.length-3)
             mapName += maptkn[i] + "_";
         else
             mapName += maptkn[i];
@@ -103,7 +100,7 @@ function getRealTime(time)
     return minutes + ":" + seconds + ":" + miliseconds;
 }
 
-ul.addEventListener('click', function(e)
+ul.addEventListener('click', (e) =>
 {
     if(e.target.id == "searchLink")
     {
@@ -115,7 +112,7 @@ ul.addEventListener('click', function(e)
     }
 });
 
-searchBox.onkeyup = function (e) 
+searchBox.onkeyup = (e) =>
 {
     var item = document.querySelector('#searchText').value;
 
@@ -132,7 +129,7 @@ searchBox.onkeyup = function (e)
     }
 }
 
-ipcRenderer.on('search:clear', function () 
+ipcRenderer.on('search:clear', () =>
 {
     ul.innerHTML = '';
 });

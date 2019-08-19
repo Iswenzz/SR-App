@@ -2,12 +2,9 @@ const electron = require('electron');
 const { ipcRenderer } = electron;
 const serverList = document.getElementById("serverList");
 
-(function()
-{
-    ipcRenderer.send("getserver")
-})();
+ipcRenderer.send("getserver");
 
-ipcRenderer.on("serverinfo", function(e, item)
+ipcRenderer.on("serverinfo", (e, item) =>
 {
     var tkn = item.split("\\");
 
@@ -28,12 +25,12 @@ ipcRenderer.on("serverinfo", function(e, item)
     cardText.style.whiteSpace = "pre-line";
     cardText.style.color = "white";
 
-    for(var i = 0; i<tkn.length; i++)
+    for (let i = 0; i<tkn.length; i++)
     {
         var string = tkn[i].split("@");
-        if(string.length > 1)
+        if (string.length > 1)
         {
-            if(string[0] == "hostname")
+            if (string[0] == "hostname")
             {
                 hostname = string[1].split(" ");
 
@@ -44,7 +41,7 @@ ipcRenderer.on("serverinfo", function(e, item)
                 cardBody.appendChild(h2);
             }
 
-            if(string[0] == "address")
+            else if (string[0] == "address")
             {
                 var button = document.createElement("a");
                 button.href = "cod4://" + string[1];
@@ -53,7 +50,7 @@ ipcRenderer.on("serverinfo", function(e, item)
                 cardBody.appendChild(button);
             }
 
-            if(string[0] == "mapname")
+            else if (string[0] == "mapname")
             {
                 var cardTitle = document.createElement("h5");
                 cardTitle.appendChild(document.createTextNode(string[1].toUpperCase()));
@@ -66,19 +63,13 @@ ipcRenderer.on("serverinfo", function(e, item)
                 img.alt = "Card image cap";
                 cardBody.appendChild(img);
 
-                if(!FileTest("http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + string[1] + ".jpg")) {
+                if (!FileTest("http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + string[1] + ".jpg"))
                     img.src = "images/loadscreen_not_found.jpg";
-                }
             }
-            
-            if(string[0] == "player")
-            {
+            else if (string[0] == "player")
                 cardText.appendChild(document.createTextNode(string[1] + "\n"));
-            }
-
         }
     }
-
     serverList.appendChild(column);
 
     column.appendChild(card);
@@ -91,11 +82,6 @@ ipcRenderer.on("serverinfo", function(e, item)
     cardBody.appendChild(button);
 });
 
-function toTitle(str)
-{
-    return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
-}
-
 function FileTest(url) 
 {
     var xhr = new XMLHttpRequest();
@@ -103,12 +89,7 @@ function FileTest(url)
     xhr.send();
      
     if (xhr.status == "404") 
-    {
         return false;
-    } 
-
     else 
-    {
         return true;
-    }
 }

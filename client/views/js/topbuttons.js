@@ -1,45 +1,32 @@
-(function () 
+const { BrowserWindow } = require('electron').remote;
+
+function init() 
 {
-    const { BrowserWindow } = require('electron').remote
-
-    function init() 
+    document.getElementById("min-btn").addEventListener("click", (e) => 
     {
-        console.log("hello");
+        var window = BrowserWindow.getFocusedWindow();
+        window.minimize();
+    });
 
-        document.getElementById("min-btn").addEventListener("click", (e) => 
-        {
-            console.log("test");
-            var window = BrowserWindow.getFocusedWindow();
-            window.minimize();
-        });
-
-        document.getElementById("max-btn").addEventListener("click", (e) => 
-        {
-            var window = BrowserWindow.getFocusedWindow();
-
-            if (window.isMaximized()) 
-            {
-                window.unmaximize();
-            } 
-
-            else 
-            {
-                window.maximize();
-            }
-        });
-
-        document.getElementById("close-btn").addEventListener("click", (e) => 
-        {
-            var window = BrowserWindow.getFocusedWindow();
-            window.close();
-        });
-    };
-
-    document.onreadystatechange = () => 
+    document.getElementById("max-btn").addEventListener("click", (e) => 
     {
-        if (document.readyState == "complete") 
-        {
-            init();
-        }
-    };
-})();
+        var window = BrowserWindow.getFocusedWindow();
+
+        if (window.isMaximized()) 
+            window.unmaximize();
+        else 
+            window.maximize();
+    });
+
+    document.getElementById("close-btn").addEventListener("click", (e) => 
+    {
+        var window = BrowserWindow.getFocusedWindow();
+        window.close();
+    });
+}
+
+document.onreadystatechange = () => 
+{
+    if (document.readyState == "complete") 
+        init();
+};

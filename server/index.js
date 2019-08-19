@@ -3,11 +3,15 @@ const fs = require('fs');
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({port: 8080});
 
-wss.on('connection', function connection(ws) 
+// -----------------------------------------------------
+// --------------------- MESSAGES ----------------------
+// -----------------------------------------------------
+
+wss.on('connection', (ws) =>
 {
     console.log("Connected");
 
-    ws.on('message', function incoming(message)
+    ws.on('message', (message) =>
     {
         console.log('received: %s', message);
 
@@ -17,9 +21,9 @@ wss.on('connection', function connection(ws)
             ws.send(JSON.stringify(arr));
         }
 
-        if(message.startsWith("maptime"))
+        if (message.startsWith("maptime"))
         {
-            getMapTimes(message, function (arr)
+            getMapTimes(message, (arr) =>
             {
                 ws.send(JSON.stringify(arr));
             });
@@ -27,15 +31,15 @@ wss.on('connection', function connection(ws)
 
         if (message.startsWith("playersearch"))
         {
-            getIds(message, function(arr)
+            getIds(message, (arr) =>
             {
                 ws.send(JSON.stringify(arr));
             });
         }
 
-        if(message.startsWith("playertimes"))
+        if (message.startsWith("playertimes"))
         {
-            getPlayerTimes(message, function(arr)
+            getPlayerTimes(message, (arr) =>
             {
                 ws.send(JSON.stringify(arr));
             });
@@ -43,18 +47,22 @@ wss.on('connection', function connection(ws)
     });  
 });
 
+// -----------------------------------------------------
+// --------------------- RESPONSE ----------------------
+// -----------------------------------------------------
+
 function getPlayerTimes(message, done)
 {
     var tkn = message.toLowerCase().split(":")
     var path = __dirname + "/../personbest";
     var times = ["playertimes"];
 
-    if(tkn.length > 1)
+    if (tkn.length > 1)
     {
         var files = fs.readdirSync(path);
-        for(var i = 0; i<files.length; i++)
+        for (var i = 0; i<files.length; i++)
         {
-            if(files[i] == tkn[1]+".txt")
+            if (files[i] == tkn[1]+".txt")
             {
                 fs.readFile(path + "/" + files[i], { encoding: 'utf-8' }, function (err, data) 
                 {
@@ -64,10 +72,7 @@ function getPlayerTimes(message, done)
                         var lines = text.split("\n");
                         
                         for (x = 0; x < lines.length; x++)
-                        {
                             times[times.length] = lines[x];
-                        }
-
                     }
                     else
                         console.log(err);
@@ -97,7 +102,6 @@ function getIds(message, done)
             }
         }
     }
-
     done(results);
 }
 
@@ -166,27 +170,22 @@ function getMaps(message)
 
     if (tkn[0] == "mapsearch")
     {
-        if(tkn.length > 1)
+        if (tkn.length > 1)
         {
             var files = fs.readdirSync(__dirname + "/../map_times");
 
-            for(var i = 0; i<files.length; i++)
+            for (var i = 0; i<files.length; i++)
             {
                 var file = files[i].split(".")[0];
 
                 if (file.startsWith(tkn[1]))
-                {
                     results[results.length] = file;
-                }
 
                 else if (file.includes(tkn[1]))
-                {
                     results[results.length] = file;
-                }
             }
         }
     }
-
     return results;
 }
 
@@ -194,14 +193,14 @@ function filterResults(arr)
 {
     var maps = [];
 
-    cont: for(var z = 0; z<arr.length; z++)
+    cont: for (var z = 0; z<arr.length; z++)
     {
         var tkn = arr[z].split("_");
         var mapName = "";
 
-        for(i = 0; i<tkn.length; i++)
+        for (i = 0; i<tkn.length; i++)
         {
-            if(tkn[i] != "fastesttimes")
+            if (tkn[i] != "fastesttimes")
             {
                 if(i == 0)
                     mapName += tkn[i] + "_";
@@ -209,20 +208,17 @@ function filterResults(arr)
                     mapName += tkn[i];
                 else if(i > 1)
                     mapName += "_" + tkn[i];
-            }
-                
+            }    
             else
                 break;
         }
 
-        for(l = 0; l<maps.length; l++)
+        for(l = 0; l < maps.length; l++)
         {
             if(maps[l] == mapName)
                 continue cont;
         }
-
         maps[maps.length] = mapName;
     }
-
     return maps;
 }

@@ -18,17 +18,18 @@ function onYouTubePlayerAPIReady()
 
 function onPlayerStateChange(e) 
 {
-                var frm = $(e.target.getIframe());
-                if (e.data === YT.PlayerState.ENDED) {
-                    if ('mainPlayer' === frm.attr('id')) {
-                        player.playVideo();
-                    }
-                }
-                if (e.data === YT.PlayerState.BUFFERING) {
-                    if ('mainPlayer' === frm.attr('id')) {
-                        setPlaybackQuality('hd720');
-                    }
-                }
+    var frm = $(e.target.getIframe());
+
+    if (e.data === YT.PlayerState.ENDED) 
+    {
+        if ('mainPlayer' === frm.attr('id')) 
+            player.playVideo();
+    }
+    if (e.data === YT.PlayerState.BUFFERING) 
+    {
+        if ('mainPlayer' === frm.attr('id'))
+            setPlaybackQuality('hd720');
+    }
 }
 
 function onPlayerReady(e) 
@@ -36,20 +37,17 @@ function onPlayerReady(e)
     e.target.setPlaybackQuality('hd720');
 }
            
-var enableYoutube = function() 
+var enableYoutube = () =>
 {
     var deferred = $.Deferred();
     var img = new Image();
-    img.onload = function() { return deferred.resolve(); };
-    img.onerror = function() { return deferred.reject(); };
+    img.onload = () => { return deferred.resolve(); };
+    img.onerror = () => { return deferred.reject(); };
     img.src = "https://www.youtube.com/yts/img/pixel-vfl3z5WfW.gif?"+ new Date().getTime();
     return deferred.promise();
 };
            
-(function() 
+$.when(enableYoutube()).done(() =>
 {
-    $.when(enableYoutube()).done(function() 
-    {
-        $('body').append('<script type="text/javascript" src="//d1wfiv6sf8d64f.cloudfront.net/static/pc/js/player.js"><\/script>');
-    }).fail(function(){});
-})();
+    $('body').append('<script type="text/javascript" src="//d1wfiv6sf8d64f.cloudfront.net/static/pc/js/player.js"><\/script>');
+}).fail(() => { });
