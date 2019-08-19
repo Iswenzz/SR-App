@@ -12,11 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dialogs": "^1.1.20",
-    "electron": "^2.0.3",
+    "dialogs": "^2.0.1",
+    "electron": "^2.0.18",
     "execSync": "^1.0.2",
     "opn": "^5.3.0",
-    "ws": "^5.2.0",
+    "ws": "^5.2.2",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {

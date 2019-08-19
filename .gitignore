@@ -1,0 +1,12 @@
+
+client/node_modules/
+
+client/release-builds/
+
+server/node_modules/
+
+map_times/
+
+personbest/
+
+client/views/images/loadscreen/
