@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <title>Players PB</title>
+        <meta name="description" content="">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<head>
-    <title>Players PB</title>
-    <meta name="description" content="">
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-            <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-            <script src="js/jquery.slim.min.js"></script>
-            <script src="js/popper.min.js"></script>
-            <script src="js/bootstrap.min.js"></script>
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+        <script src="js/jquery.slim.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 
         <link rel="icon" href="https://accreu.com/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="css/bootstrap_theme.min.css"/>
@@ -25,34 +24,34 @@
                 <button id="min-btn">−</button>
             </div>
         </div>
+        <div class="some_space" style="height:50px;"></div>
+    </head>
+
+    <body style="background-color:#36393e">
+
+        <div class="searchBar">
+            <form id="searchform">
+                <input type="text" id="searchText" placeholder="Search PlayerID">
+            </form>
+        </div>
+
+        <div class="searchresultsbox" id="searchbackground">
+            <ul class="searchresults" id='serchList'></ul>
+        </div>
 
         <div class="some_space" style="height:50px;"></div>
-</head>
 
-<body style="background-color:#36393e">
+        <table class="playerTimesTable_pb" id="playertimes"></table>
 
-    <div class="searchBar">
-        <form id="searchform">
-            <input type="text" id="searchText" placeholder="Search PlayerID">
-        </form>
-    </div>
-
-    <div class="searchresultsbox" id="searchbackground">
-        <ul class="searchresults" id='serchList'></ul>
-    </div>
-
-    <div class="some_space" style="height:50px;"></div>
-
-    <table class="playerTimesTable_pb" id="playertimes"></table>
-
-    <div class="navbar">
+        <div class="navbar">
             <a class="navtext" href="home.html">Home</a>
             <a class="navtext" href="leaderboard.html">Leaderboards</a>
             <a class="navtext" href="players.html">Player PB</a>
             <a class="navtext" href="servers.html">Servers</a>
         </div>
 
-    <script src="js/topbuttons.js"></script>
-    <script src="js/playertimes.js"></script>
+        <script src="js/topbuttons.js"></script>
+        <script src="js/playertimes.js"></script>
 
-</body>
+    </body>
+</html>

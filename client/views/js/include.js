@@ -8,15 +8,15 @@ function includeHTML()
 		elmnt = z[i];
 		file = elmnt.getAttribute("w3-include-html");
 
-		if (file) 
+		if (file)
 		{
 			xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = () =>
+			xhttp.onreadystatechange = function() 
 			{
 				if (this.readyState == 4) 
 				{
-					if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-					if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+					if (this.status == 200) elmnt.innerHTML = this.responseText;
+					if (this.status == 404) elmnt.innerHTML = "Page not found.";
 					elmnt.removeAttribute("w3-include-html");
 					includeHTML();
 				}
@@ -28,4 +28,5 @@ function includeHTML()
 		}
 	}
 }
+
 includeHTML();
