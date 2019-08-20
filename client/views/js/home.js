@@ -152,7 +152,7 @@ $(document).ready(function ()
                     "</div>");
             }
             ResCarouselSize();
-        }, 0);
+        });
     }
     loadMapImages();
 });
