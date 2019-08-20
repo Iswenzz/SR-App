@@ -1,32 +1,20 @@
 const { BrowserWindow } = require('electron').remote;
 
-function init() 
-{
-    document.getElementById("min-btn").addEventListener("click", (e) => 
-    {
-        var window = BrowserWindow.getFocusedWindow();
-        window.minimize();
-    });
+$(document).on("click", "#min-btn", () => {
+    let window = BrowserWindow.getFocusedWindow();
+    window.minimize();
+});
 
-    document.getElementById("max-btn").addEventListener("click", (e) => 
-    {
-        var window = BrowserWindow.getFocusedWindow();
+$(document).on("click", "#max-btn", () => {
+    let window = BrowserWindow.getFocusedWindow();
 
-        if (window.isMaximized()) 
-            window.unmaximize();
-        else 
-            window.maximize();
-    });
+    if (window.isMaximized())
+        window.unmaximize();
+    else
+        window.maximize();
+});
 
-    document.getElementById("close-btn").addEventListener("click", (e) => 
-    {
-        var window = BrowserWindow.getFocusedWindow();
-        window.close();
-    });
-}
-
-document.onreadystatechange = () => 
-{
-    if (document.readyState == "complete") 
-        init();
-};
+$(document).on("click", "#close-btn", () => {
+    let window = BrowserWindow.getFocusedWindow();
+    window.close();
+});
