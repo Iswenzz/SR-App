@@ -15,6 +15,7 @@
     "dialogs": "^2.0.1",
     "electron": "^2.0.18",
     "execSync": "^1.0.2",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "opn": "^5.3.0",
     "particles.js": "^2.0.0",
@@ -22,6 +23,7 @@
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.1",
     "electron-packager": "^12.1.0"
   }
 }
