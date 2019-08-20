@@ -1,10 +1,8 @@
-const path = require('path');
-
 particlesJS.load('particles-js', 'json/particles.json');
 
 $(document).ready(function () 
 {
-    newMapList = [
+    const newMapList = [
         "mp_deathrun_boss", "mp_deathrun_bounce_v3", "mp_deathrun_city", "mp_deathrun_coyote", "mp_deathrun_coyote_v2", 
         "mp_deathrun_dragonball", "mp_deathrun_epicfail", "mp_deathrun_fusion", "mp_deathrun_iceops", 
         "mp_deathrun_minecraft", "mp_deathrun_palm", "mp_deathrun_saw", "mp_deathrun_shadow", "mp_deathrun_simplist", 
@@ -13,26 +11,6 @@ $(document).ready(function ()
         "mp_dr_lovelyplanet", "mp_dr_meatboy", "mp_dr_mew", "mp_dr_mirrors_edge", "mp_dr_mystic", "mp_dr_nighty", 
         "mp_dr_pyramid", "mp_dr_samsara", "mp_dr_sm64", "mp_dr_stonerun", "mp_dr_volpe"
     ]
-
-    // add images
-    for (let i = 0; i < newMapList.length; i++)
-    {
-        let url = "images/loadscreen_not_found.jpg";
-        if (FileTest("http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + newMapList[i] + ".jpg"))
-            url = "http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + newMapList[i] + ".jpg";
-
-        let shortname = newMapList[i].replace("mp_deathrun_", "").replace("mp_dr_", "")
-            .replace("mp_", "").replace("_", " ");
-        shortname = shortname.charAt(0).toUpperCase() + shortname.slice(1);
-
-        $(".MultiCarousel-inner").append(
-            "<div class=\"item shadow-p\">" +
-                "<div class=\"pad5\">" +
-                    "<img src=\"" + url + "\" class=\"img-fluid\">" +
-                    "<p>" + shortname + "</p>" +
-                "</div>" +
-            "</div>");
-    }
 
     var itemsMainDiv = ('.MultiCarousel');
     var itemsDiv = ('.MultiCarousel-inner');
@@ -44,7 +22,7 @@ $(document).ready(function ()
         if (condition)
             click(0, this);
         else
-            click(1, this)
+            click(1, this);
     });
     ResCarouselSize();
 
@@ -149,6 +127,34 @@ $(document).ready(function ()
         var slide = $(Parent).attr("data-slide");
         ResCarousel(ell, Parent, slide);
     }
+
+    // load images in carousel
+    function loadMapImages() 
+    {
+        setTimeout(() => 
+        {
+            for (let i = 0; i < newMapList.length; i++) 
+            {
+                let url = "images/loadscreen_not_found.jpg";
+                if (FileTest("http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + newMapList[i] + ".jpg"))
+                    url = "http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + newMapList[i] + ".jpg";
+
+                let shortname = newMapList[i].replace("mp_deathrun_", "").replace("mp_dr_", "")
+                    .replace("mp_", "").replace("_", " ");
+                shortname = shortname.charAt(0).toUpperCase() + shortname.slice(1);
+
+                $(".MultiCarousel-inner").append(
+                    "<div class=\"item shadow-p\">" +
+                    "<div class=\"pad5\">" +
+                    "<img src=\"" + url + "\" class=\"img-fluid\">" +
+                    "<p>" + shortname + "</p>" +
+                    "</div>" +
+                    "</div>");
+            }
+            ResCarouselSize();
+        }, 0);
+    }
+    loadMapImages();
 });
 
 function FileTest(url) 
