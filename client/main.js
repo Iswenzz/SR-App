@@ -116,7 +116,7 @@ app.on('ready', () =>
 {
     mainWindow = new BrowserWindow(
     {
-        backgroundColor: '#36393e',
+        backgroundColor: '#0036393e',
         'width': 1250,
         'height': 800,
         'minHeight': 750,
@@ -136,7 +136,9 @@ app.on('ready', () =>
         app.quit();
     });
 
-    mainWindow.webContents.openDevTools();
+    if (process.env.NODE_ENV == "debug")
+        mainWindow.webContents.openDevTools();
+
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     Menu.setApplicationMenu(mainMenu);
 });
