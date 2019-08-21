@@ -27,7 +27,7 @@ $(searchBox).on("keyup", (e) =>
 	if (item == "") 
 	{
 		$(ul).html("");
-		$(background).css("display", "block");
+		$(background).css("display", "none");
 	}
 	else if (item.length < 30)
 	{
@@ -67,7 +67,8 @@ ipcRenderer.on('maptimes', (e, item) =>
 		);
 	}
       
-	if ($(".playerTimesTable").attr("way") == tkn[1])
+	if ($(".playerTimesTable").attr("speed") == tkn[0]
+		&& $(".playerTimesTable").attr("way") == tkn[1])
 	{
 		let table = $(".playerTimesTable");
 		let tr = $('<tr></tr>');
@@ -108,6 +109,14 @@ $(document).on("click", "#srwaybutton", function ()
 	ipcRenderer.send('getmap', $("#mapName").text());
 });
 
+// speed button event
+$(document).on("click", "#srspeedbutton", function ()
+{
+	$(".playerTimesTable").html("");
+	$(".playerTimesTable").attr("speed", $(this).attr("speed"));
+	ipcRenderer.send('getmap', $("#mapName").text());
+});
+
 // clear page
 ipcRenderer.on('times:clear', () =>
 {
@@ -144,7 +153,8 @@ $(ul).on('click', (e) =>
         ipcRenderer.send('getmap', mapName);
 
         $(ul).html("");
-        $(background).css("display", "none");
+		$(background).css("display", "none");
+		$("#buttonContainer").css("display", "block");
 		$("#searchText").val("");
 		$("#mapName").text(mapName);
 		$("#mapImage").attr("src", mapImage);

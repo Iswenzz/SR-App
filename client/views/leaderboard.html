@@ -43,12 +43,19 @@
 		</div>
 
 		<div class="row">
-			<!-- Image/Name/Button col -->
+			<!-- Image/Name/Buttons col -->
 			<div class="col-4 text-center pl-5">
 				<img src="" id="mapImage" class="img-fluid">
 				<h4 class="pt-2" id="mapName" style="font-family: BankGothic; font-size:1.6vw;"></h4>
-				<div style="height: 100px"></div>
-				<div id="buttonContainer">
+				<div style="height: 50px"></div>
+				<div id="buttonContainer" style="display: none">
+					<div class="container-fluid">
+						<button class="btn btn-outline-primary m-1" speed="190" id="srspeedbutton"
+							style="font-family: Bankgothic">190</button>
+						<button class="btn btn-outline-primary m-1" speed="210" id="srspeedbutton"
+							style="font-family: Bankgothic">210</button>
+					</div>
+					<div style="height: 50px"></div>
 					<div class="container-fluid" id="srwaycontainer0"></div>
 					<div class="container-fluid" id="srwaycontainer1"></div>
 					<div class="container-fluid" id="srwaycontainer2"></div>
@@ -59,7 +66,7 @@
 			</div>
 			<!-- Table col -->
 			<div class="col-8 text-center">
-				<table class="playerTimesTable" speed="190" way="ns0"></table>
+				<table class="playerTimesTable sr_fade" speed="190" way="ns0"></table>
 			</div>
 		</div>
 
