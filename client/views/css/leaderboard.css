@@ -31,7 +31,7 @@
     font-family: BankGothic;
     padding: 0px;
     margin: 10px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .searchresults li:nth-of-type(1n+11) {
@@ -149,5 +149,5 @@
 }
 
 #playerlink:link {
-    color: royalblue;
+    color: dimgray;
 }

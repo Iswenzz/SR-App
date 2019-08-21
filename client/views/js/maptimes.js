@@ -70,20 +70,47 @@ ipcRenderer.on('maptimes', (e, item) =>
 	if ($(".playerTimesTable").attr("speed") == tkn[0]
 		&& $(".playerTimesTable").attr("way") == tkn[1])
 	{
+		let itemCount = $(".playerTimesTable tr").length;
 		let table = $(".playerTimesTable");
 		let tr = $('<tr></tr>');
 
 		let tableRank = $('<td></td>')
-			.addClass("tableRank")
-			.text($(".playerTimesTable tr").length + 1);
+			.addClass("tableRank");
+		switch (itemCount)
+		{
+			case 0: 
+			case 1: 
+			case 2: 
+				$(tableRank).append($("<img></img>")
+					.attr("src", "images/" + itemCount + ".png")
+					.attr("width", "30")
+					.attr("height", "30")
+					.addClass("img-fluid"));
+				break;
+			default: 
+				$(tableRank).text(itemCount + 1); 
+				break;
+		}
 
 		let tableName = $('<td></td>')
 			.addClass("tableName")
 			.text(tkn[3]);
+		switch (itemCount)
+		{
+			case 0: $(tableName).css("color", "gold"); 	 			break;
+			case 1: $(tableName).css("color", "lightsteelblue"); 	break;
+			case 2: $(tableName).css("color", "peru"); 				break;
+		}
 
 		let tableTime = $('<td></td>')
 			.addClass("tableTime")
-			.text(getRealTime(tkn[2]));
+			.text(getRealTime(tkn[2]));	
+		switch (itemCount) 
+		{
+			case 0: $(tableTime).css("color", "gold"); 				break;
+			case 1: $(tableTime).css("color", "lightsteelblue"); 	break;
+			case 2: $(tableTime).css("color", "peru"); 				break;
+		}
 
 		let tableIdLink = $('<a></a>')
 			.attr("href", "players.html#")
