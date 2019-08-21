@@ -1,85 +1,79 @@
 const electron = require('electron');
 const {ipcRenderer} = electron;
-const ul = document.getElementById('serchList');
-const link = document.getElementById('searchLink');
-const searchBox = document.getElementById('searchform')
-const background = document.getElementById("searchbackground");
+
+const ul = $("#serchList");
+const link = $("#searchLink");
+const searchBox = $("#searchform");
+const background = $("#searchbackground");
 
 ipcRenderer.on('search:results', (e, item) =>
 {
-    const li = document.createElement('li');
-    var a = document.createElement('a');
-    const itemText = document.createTextNode(item);
+	let li = $("<li></li>");
+	let a = $("<a></a>")
+		.text(item)
+		.attr("href", "#")
+		.attr("id", "searchLink");
+	$(li).append(a);
+	$(ul).append(li);
+});
 
-    a.appendChild(itemText);
-    a.href = "#";
-    a.id = "searchLink";
+$(searchBox).on("keyup", (e) => 
+{
+	var item = $("#searchText").val();
 
-    li.appendChild(a);
-    ul.appendChild(li);
+	if (item == "") 
+	{
+		$(ul).html("");
+		$(background).css("display", "block");
+		console.log("empty text box");
+	}
+	else if (item.length < 30)
+	{
+		ipcRenderer.send('search:mapTimes', item);
+		$(background).css("display", "block");
+	}
 });
 
 ipcRenderer.on('maptimes', (e,item) =>
 {
-    var tkn = item.split("\\");
+    let tkn = item.split("\\");
 
     if (tkn.length < 5)
         return;
       
-    var names = document.getElementById("name" + tkn[0] + tkn[1]);
+    let table = $(".playerTimesTable");
+    let tr = $('<tr></tr>');
 
-    if (names.innerHTML == "")
-    {
-        var header = document.createElement('tr');
-        var headerName = document.createElement('th');
-        var headerTime = document.createElement('th');
-        var headerId = document.createElement('th');
+    let tableRank = $('<td></td>')
+        .addClass("tableRank")
+        .text($(".playerTimesTable tr").length + 1);
 
-        header.appendChild(headerName);
-        header.appendChild(headerTime);
-        header.appendChild(headerId);
-    }
+    let tableName = $('<td></td>')
+        .addClass("tableName")
+        .text(tkn[3]);
 
-    var table = document.createElement('tr');
+    let tableTime = $('<td></td>')
+        .addClass("tableTime")
+        .text(getRealTime(tkn[2]));
 
-    var tableRank = document.createElement('td');
-    tableRank.className = "tableRank";
+	let tableIdLink = $('<a></a>')
+		.attr("href", "players.html#")
+		.attr("id", "playerlink")
+		.text(tkn[4]);
+    
+	let tableId = $('<td></td>').append(tableIdLink);
 
-    var tableText = document.createTextNode((document.getElementById("name"+tkn[0]+tkn[1]).getElementsByTagName("tr").length + 1));
-    tableRank.appendChild(tableText);
+	$(tr).append(tableRank);
+	$(tr).append(tableName);
+	$(tr).append(tableTime);
+	$(tr).append(tableId);
 
-    var tableName = document.createElement('td');
-    tableName.className = "tableName";
-    var tableText = document.createTextNode(tkn[3]);
-    tableName.appendChild(tableText);
-
-    var tableTime = document.createElement('td');
-    tableTime.className = "tableTime";
-    tableText = document.createTextNode(getRealTime(tkn[2]));
-    tableTime.appendChild(tableText);
-
-    var tableId = document.createElement('td');
-    var tableIdLink = document.createElement('a');
-    tableText = document.createTextNode(tkn[4]);
-    tableIdLink.appendChild(tableText);
-    tableIdLink.href = "players.html#" + tkn[4];
-    tableIdLink.id = "playerlink";
-    tableId.appendChild(tableIdLink);
-
-    table.appendChild(tableRank);
-    table.appendChild(tableName);
-    table.appendChild(tableTime);
-    table.appendChild(tableId);
-
-    names.appendChild(table);
+	$(table).append(tr);
 });
 
 ipcRenderer.on('times:clear', () =>
 {
-    var ids = ["name1900", "name1901", "name2100", "name2101"]
-
-    for (i = 0; i < ids.length; i++)
-        document.getElementById(ids[i]).innerHTML = "";
+	
 });
 
 function getRealTime(time)
@@ -95,61 +89,25 @@ function getRealTime(time)
 
 ipcRenderer.on('search:clear', () =>
 {
-    ul.innerHTML = '';
+    $(ul).html("");
 });
 
-searchBox.onkeyup = (e) =>
+$(ul).on('click', (e) =>
 {
-    var item = document.querySelector('#searchText').value;
-
-    if (item != "" && item.length < 30)
+    if ($(e.target).attr("id") == "searchLink") 
     {
-        ipcRenderer.send('search:mapTimes', item);
-        background.style.display = "block";
-    }
+        let mapName = $(e.target).text();
 
-    if (item == "")
-    {
-        ul.innerHTML = '';
-        background.style.display = "none";
-    }
-}
+        console.log(mapName);
+        ipcRenderer.send('getmap', mapName);
 
-ul.addEventListener('click', (e) =>
-{
-    if (e.target.id == "searchLink")
-    {
-        ipcRenderer.send('getmap', e.target.innerHTML);
-        ul.innerHTML = '';
-        background.style.display = "none";
-        document.querySelector('#searchText').value = "";
+        $(ul).html("");
+        $(background).css("display", "none");
+        $("#searchText").val("");
 
-        document.getElementById("mapname1").innerHTML = "";
-        document.getElementById("mapname2").innerHTML = "";
-        document.getElementById("mapname3").innerHTML = "";
-        document.getElementById("mapname4").innerHTML = "";
-
-        document.getElementById("mapimage1").src = "http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + e.target.innerHTML + ".jpg";
-        document.getElementById("mapimage2").src = "http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + e.target.innerHTML + ".jpg";
-        document.getElementById("mapimage3").src = "http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + e.target.innerHTML + ".jpg";
-        document.getElementById("mapimage4").src = "http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + e.target.innerHTML + ".jpg";
-
-        document.getElementById("infodisplay_anim").style = "display: block;"
-        document.getElementById("sr_prev").style = "display: block;"
-        document.getElementById("sr_next").style = "display: block;"
-
-        document.getElementById("mapname1").appendChild(document.createTextNode(e.target.innerHTML));
-        document.getElementById("mapname2").appendChild(document.createTextNode(e.target.innerHTML));
-        document.getElementById("mapname3").appendChild(document.createTextNode(e.target.innerHTML));
-        document.getElementById("mapname4").appendChild(document.createTextNode(e.target.innerHTML));
-
-        if (!FileTest("http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + e.target.innerHTML + ".jpg")) 
-        {
-            document.getElementById("mapimage1").src = "images/loadscreen_not_found.jpg";
-            document.getElementById("mapimage2").src = "images/loadscreen_not_found.jpg";
-            document.getElementById("mapimage3").src = "images/loadscreen_not_found.jpg";
-            document.getElementById("mapimage4").src = "images/loadscreen_not_found.jpg";
-        }
+        $(background).css("#infodisplay_anim", "none");
+        $(background).css("#sr_prev", "none");
+        $(background).css("#sr_next", "none");
     }
 });
 

@@ -1,5 +1,3 @@
-particlesJS.load('particles-js', 'json/particles.json');
-
 $(document).ready(function () 
 {
     const newMapList = [

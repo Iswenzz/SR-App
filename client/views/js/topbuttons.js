@@ -1,5 +1,7 @@
 const { BrowserWindow } = require('electron').remote;
 
+particlesJS.load('particles-js', 'json/particles.json');
+
 $(document).on("click", "#min-btn", () => {
     let window = BrowserWindow.getFocusedWindow();
     window.minimize();
