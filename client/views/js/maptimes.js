@@ -40,12 +40,8 @@ $(searchBox).on("keyup", (e) =>
 ipcRenderer.on('maptimes', (e, item) =>
 {
     let tkn = item.split("\\");
-
-    if (tkn.length < 5)
-		return;
+    if (tkn.length < 5) return;
 		
-	let way = tkn[0] + ":" + tkn[1];
-
 	// add button to switch way
 	if (!ways.includes(tkn[1]))
 	{
@@ -71,7 +67,7 @@ ipcRenderer.on('maptimes', (e, item) =>
 		);
 	}
       
-	if ($(".playerTimesTable").attr("id") == way)
+	if ($(".playerTimesTable").attr("way") == tkn[1])
 	{
 		let table = $(".playerTimesTable");
 		let tr = $('<tr></tr>');
@@ -107,7 +103,9 @@ ipcRenderer.on('maptimes', (e, item) =>
 // way button event
 $(document).on("click", "#srwaybutton", function () 
 {
-	$(".playerTimesTable").attr("id", $(this).attr("way"));
+	$(".playerTimesTable").html("");
+	$(".playerTimesTable").attr("way", $(this).attr("way"));
+	ipcRenderer.send('getmap', $("#mapName").text());
 });
 
 // clear page
@@ -137,6 +135,11 @@ $(ul).on('click', (e) =>
 		ways = [];
 		for (let i = 0; i < 6; i++)
 			$("#srwaycontainer" + i).html("");
+
+		// set to 190 ns0 by default
+		$(".playerTimesTable")
+			.attr("speed", "190")
+			.attr("way", "ns0");
 
         ipcRenderer.send('getmap', mapName);
 
