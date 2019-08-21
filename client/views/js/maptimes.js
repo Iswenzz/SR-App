@@ -2,10 +2,12 @@ const electron = require('electron');
 const {ipcRenderer} = electron;
 
 const ul = $("#serchList");
-const link = $("#searchLink");
 const searchBox = $("#searchform");
 const background = $("#searchbackground");
 
+var ways = [];
+
+// search result event
 ipcRenderer.on('search:results', (e, item) =>
 {
 	let li = $("<li></li>");
@@ -17,6 +19,7 @@ ipcRenderer.on('search:results', (e, item) =>
 	$(ul).append(li);
 });
 
+// search box keyup event
 $(searchBox).on("keyup", (e) => 
 {
 	var item = $("#searchText").val();
@@ -25,7 +28,6 @@ $(searchBox).on("keyup", (e) =>
 	{
 		$(ul).html("");
 		$(background).css("display", "block");
-		console.log("empty text box");
 	}
 	else if (item.length < 30)
 	{
@@ -34,86 +36,131 @@ $(searchBox).on("keyup", (e) =>
 	}
 });
 
-ipcRenderer.on('maptimes', (e,item) =>
+// render each time entry to the table
+ipcRenderer.on('maptimes', (e, item) =>
 {
     let tkn = item.split("\\");
 
     if (tkn.length < 5)
-        return;
+		return;
+		
+	let way = tkn[0] + ":" + tkn[1];
+
+	// add button to switch way
+	if (!ways.includes(tkn[1]))
+	{
+		ways.push(tkn[1]);
+
+		let id = "0";
+		let isSecret = true;
+
+		if (tkn[1].includes("ns"))
+		{
+			id = tkn[1].split("ns")[1];
+			isSecret = false;
+		}
+		else if (tkn[1].includes("s"))
+			id = tkn[1].split("s")[1];
+
+		let outline = isSecret ? "btn-outline-secondary" : "btn-outline-danger";
+		let shortWay = isSecret ? "S" : "N";
+
+		$("#srwaycontainer" + id).append(
+			"<button style=\"font-family: Bankgothic\" id=\"srwaybutton\" way=\"" + tkn[1] + "\" class=\"btn " 
+			+ outline + " btn-circle btn-circle-lg m-1\">" + shortWay + "</button>"
+		);
+	}
       
-    let table = $(".playerTimesTable");
-    let tr = $('<tr></tr>');
+	if ($(".playerTimesTable").attr("id") == way)
+	{
+		let table = $(".playerTimesTable");
+		let tr = $('<tr></tr>');
 
-    let tableRank = $('<td></td>')
-        .addClass("tableRank")
-        .text($(".playerTimesTable tr").length + 1);
+		let tableRank = $('<td></td>')
+			.addClass("tableRank")
+			.text($(".playerTimesTable tr").length + 1);
 
-    let tableName = $('<td></td>')
-        .addClass("tableName")
-        .text(tkn[3]);
+		let tableName = $('<td></td>')
+			.addClass("tableName")
+			.text(tkn[3]);
 
-    let tableTime = $('<td></td>')
-        .addClass("tableTime")
-        .text(getRealTime(tkn[2]));
+		let tableTime = $('<td></td>')
+			.addClass("tableTime")
+			.text(getRealTime(tkn[2]));
 
-	let tableIdLink = $('<a></a>')
-		.attr("href", "players.html#")
-		.attr("id", "playerlink")
-		.text(tkn[4]);
-    
-	let tableId = $('<td></td>').append(tableIdLink);
+		let tableIdLink = $('<a></a>')
+			.attr("href", "players.html#")
+			.attr("id", "playerlink")
+			.text(tkn[4]);
 
-	$(tr).append(tableRank);
-	$(tr).append(tableName);
-	$(tr).append(tableTime);
-	$(tr).append(tableId);
+		let tableId = $('<td></td>').append(tableIdLink);
 
-	$(table).append(tr);
+		$(tr).append(tableRank);
+		$(tr).append(tableName);
+		$(tr).append(tableTime);
+		$(tr).append(tableId);
+
+		$(table).append(tr);
+	}
 });
 
+// way button event
+$(document).on("click", "#srwaybutton", function () 
+{
+	$(".playerTimesTable").attr("id", $(this).attr("way"));
+});
+
+// clear page
 ipcRenderer.on('times:clear', () =>
 {
-	
+	$(".playerTimesTable").html("");
+	$("#mapImage").html("");
 });
 
-function getRealTime(time)
-{
-    var original = time;
-    var miliseconds = time;
-    var minutes = parseInt(time / 60000);
-    miliseconds = parseInt(miliseconds % 60000);
-    var seconds = parseInt(miliseconds / 1000);
-    miliseconds = parseInt(miliseconds % 1000);
-    return minutes + ":" + seconds + ":" + miliseconds;
-}
-
+// clear search box
 ipcRenderer.on('search:clear', () =>
 {
     $(ul).html("");
 });
 
+// click event from search box item
 $(ul).on('click', (e) =>
 {
     if ($(e.target).attr("id") == "searchLink") 
     {
-        let mapName = $(e.target).text();
+		let mapName = $(e.target).text();
+		let mapImage = "images/loadscreen_not_found.jpg";
+		if (FileTest("http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + mapName + ".jpg"))
+			mapImage = "http://213.32.18.205:1337/speedrun_app/views/images/loadscreen/loadscreen_" + mapName + ".jpg";
 
-        console.log(mapName);
+		// clear buttons element/array
+		ways = [];
+		for (let i = 0; i < 6; i++)
+			$("#srwaycontainer" + i).html("");
+
         ipcRenderer.send('getmap', mapName);
 
         $(ul).html("");
         $(background).css("display", "none");
-        $("#searchText").val("");
-
-        $(background).css("#infodisplay_anim", "none");
-        $(background).css("#sr_prev", "none");
-        $(background).css("#sr_next", "none");
+		$("#searchText").val("");
+		$("#mapName").text(mapName);
+		$("#mapImage").attr("src", mapImage);
     }
 });
 
+function getRealTime(time) 
+{
+	let miliseconds = time;
+	const minutes = parseInt(time / 60000);
+	miliseconds = parseInt(miliseconds % 60000);
+	const seconds = parseInt(miliseconds / 1000);
+	miliseconds = parseInt(miliseconds % 1000);
+	return minutes + ":" + seconds + ":" + miliseconds;
+}
+
 function FileTest(url) 
 {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open('HEAD', url, false);
     xhr.send();
      
