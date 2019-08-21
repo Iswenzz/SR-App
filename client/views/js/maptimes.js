@@ -113,7 +113,7 @@ ipcRenderer.on('maptimes', (e, item) =>
 		}
 
 		let tableIdLink = $('<a></a>')
-			.attr("href", "players.html#")
+			.attr("href", "players.html#" + tkn[4])
 			.attr("id", "playerlink")
 			.text(tkn[4]);
 

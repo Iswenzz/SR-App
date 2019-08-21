@@ -8,14 +8,13 @@
 
         <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 
-        <link rel="icon" href="https://accreu.com/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="css/bootstrap_theme.min.css"/>
-        <link rel="stylesheet" href="css/font-awesome.min.css"/>
-        <link rel="stylesheet" href="css/fixed_menu.css"/>
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="packages/css/bootstrap_theme.min.css" />
+        <link rel="stylesheet" href="packages/css/all.css" />
+        <link rel="stylesheet" href="css/leaderboard.css" />
+        <link rel="stylesheet" href="css/app.css" />
 
-        <script src="js/packages/jquery.min.js"></script>
-        <script src="js/packages/bootstrap.min.js"></script>
+        <script src="packages/js/jquery.min.js"></script>
+        <script src="packages/js/bootstrap.min.js"></script>
 
         <div class="title-bar">
             <div id="title-bar-btns">
@@ -24,24 +23,24 @@
                 <button id="min-btn">−</button>
             </div>
         </div>
-        <div class="some_space" style="height:50px;"></div>
+
+        <div style="height: 50px"></div>
     </head>
+    <body data-spy="scroll" data-target="#quick-nav">
 
-    <body style="background-color:#36393e">
+        <div id="particles-js"></div>
 
-        <div class="searchBar">
+        <div class="searchBar shadow-lg">
             <form id="searchform">
                 <input type="text" id="searchText" placeholder="Search PlayerID">
             </form>
         </div>
-
-        <div class="searchresultsbox" id="searchbackground">
+        <div class="searchresultsbox shadow-lg" id="searchbackground">
             <ul class="searchresults" id='serchList'></ul>
         </div>
 
-        <div class="some_space" style="height:50px;"></div>
-
-        <table class="playerTimesTable_pb" id="playertimes"></table>
+        <div style="height: 50px"></div>
+        <table class="playerTimesTable_pb shadow-lg" id="playertimes"></table>
 
         <div class="navbar">
             <a class="navtext" href="home.html">Home</a>
@@ -50,8 +49,9 @@
             <a class="navtext" href="servers.html">Servers</a>
         </div>
 
-        <script src="js/topbuttons.js"></script>
-        <script src="js/playertimes.js"></script>
+        <script src="packages/js/particles.js"></script>
+		<script src="js/topbuttons.js"></script>
+		<script src="js/playertimes.js"></script>
 
     </body>
 </html>

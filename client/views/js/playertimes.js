@@ -1,59 +1,37 @@
 const electron = require('electron');
 const { ipcRenderer } = electron;
-const searchBox = document.getElementById('searchform')
-const ul = document.getElementById('serchList');
-const background = document.getElementById("searchbackground");
+
+const searchBox = $('#searchform')
+const ul = $('#serchList');
+const background = $("#searchbackground");
 
 var hash = document.URL.substring(document.URL.indexOf("#") + 1);
 
-if (hash.length != 0) 
+if (hash.length != 0)
     ipcRenderer.send('getplayer', hash);
 
 ipcRenderer.on('search:playerid', (e, item) =>
 {
-    const li = document.createElement('li');
-    var a = document.createElement('a');
-    const itemText = document.createTextNode(item);
-
-    a.appendChild(itemText);
-    a.href = "#";
-    a.id = "searchLink";
-
-    li.appendChild(a);
-    ul.appendChild(li);
+    let li = $("<li></li>");
+    let a = $("<a></a>")
+        .text(item)
+        .attr("href", "#")
+        .attr("id", "searchLink");
+    $(li).append(a);
+    $(ul).append(li);
 });
 
 ipcRenderer.on("playertimes", (e, item) =>
 {
-    var tkn = item.split("\\")
-
-    if (tkn.length < 7)
-        return;
+    let tkn = item.split("\\")
+    if (tkn.length < 7) return;
     
-    var table = document.getElementById("playertimes")
+    let table = $("#playertimes");
+    let row = $('<tr></tr>');
 
-    if (table.innerHTML == "")
-    {
-        var header = document.createElement("tr");
-        var headerMap = document.createElement("th")
-        var headerTime = document.createElement("th");
-        var headerSpeed = document.createElement("th");
-        var headerWay = document.createElement("th");
-
-        header.appendChild(headerMap);
-        header.appendChild(headerTime);
-        header.appendChild(headerSpeed);
-        header.appendChild(headerWay);
-    }
-
-    var row = document.createElement('tr');
-    var rowText;
-    var rowName = document.createElement('td');
-    rowName.className = "";
-
-    var maptkn = tkn[0].split("_");
-    var mapName = "";
-
+    let rowName = $('<td></td>');
+    let maptkn = tkn[0].split("_");
+    let mapName = "";
     for (let i = 0; i < maptkn.length-2; i++)
     {
         if (i != maptkn.length-3)
@@ -61,75 +39,74 @@ ipcRenderer.on("playertimes", (e, item) =>
         else
             mapName += maptkn[i];
     }
+    $(rowName).text(mapName);
 
-    rowText = document.createTextNode(mapName);
-    rowName.appendChild(rowText);
+    let rowTime = $('<td></td>');
+    $(rowTime).text(getRealTime(tkn[3]));
 
-    var rowTime = document.createElement('td');
-    rowTime.className = "";
-    rowText = document.createTextNode(getRealTime(tkn[3]));
-    rowTime.appendChild(rowText);
+    let rowSpeed = $('<td></td>');
+    $(rowSpeed).text(tkn[1]);
 
-    var rowSpeed = document.createElement('td');
-    rowSpeed.className = "";
-    rowText = document.createTextNode(tkn[1]);
-    rowSpeed.appendChild(rowText);
+    let id = "0";
+    let isSecret = true;
+    if (tkn[2].includes("ns")) 
+    {
+        id = tkn[2].split("ns")[1];
+        isSecret = false;
+    }
+    else if (tkn[2].includes("s"))
+        id = tkn[2].split("s")[1];
+    let rowWay = $('<td></td>');
+    $(rowWay).text(isSecret ? "Secret " + id : "Normal " + id)
+        .css("color", isSecret ? "steelblue" : "lightgreen");
 
-    var rowWay = document.createElement('td');
-    rowWay.className = "";
+    $(row).append(rowName);
+    $(row).append(rowTime);
+    $(row).append(rowSpeed);
+    $(row).append(rowWay);
 
-    rowText = tkn[2] == "0" ? document.createTextNode("Normal") : document.createTextNode("Secret");
-    rowWay.appendChild(rowText);
+    $(table).append(row);
+});
 
-    row.appendChild(rowName);
-    row.appendChild(rowTime);
-    row.appendChild(rowSpeed);
-    row.appendChild(rowWay);
+$(ul).on("click", (e) =>
+{
+    if ($(e.target).attr("id") == "searchLink")
+    {
+        ipcRenderer.send('getplayer', e.target.innerHTML);
+        $(ul).html("");
+        $(background).css("display", "none");
+        $("#searchText").val("");
+        $("#playertimes").html("");
+    }
+});
 
-    table.appendChild(row);
+$(searchBox).on("keyup", (e) =>
+{
+    let item = document.querySelector('#searchText').value;
+
+    if (item == "") 
+    {
+        $(ul).html("");
+        $(background).css("display", "none");
+    }
+    else if (item.length < 10 && item.length >= 3)
+    {
+        ipcRenderer.send('search:playerid', item);
+        $(background).css("display", "block");
+    }
+});
+
+ipcRenderer.on('search:clear', () =>
+{
+    $(ul).html("");
 });
 
 function getRealTime(time) 
 {
-    var original = time;
-    var miliseconds = time;
-    var minutes = parseInt(time / 60000);
+    let miliseconds = time;
+    const minutes = parseInt(time / 60000);
     miliseconds = parseInt(miliseconds % 60000);
-    var seconds = parseInt(miliseconds / 1000);
+    const seconds = parseInt(miliseconds / 1000);
     miliseconds = parseInt(miliseconds % 1000);
     return minutes + ":" + seconds + ":" + miliseconds;
 }
-
-ul.addEventListener('click', (e) =>
-{
-    if(e.target.id == "searchLink")
-    {
-        ipcRenderer.send('getplayer', e.target.innerHTML);
-        ul.innerHTML = "";
-        background.style.display = "none";
-        document.querySelector("#searchText").value = "";
-        document.getElementById("playertimes").innerHTML = "";
-    }
-});
-
-searchBox.onkeyup = (e) =>
-{
-    var item = document.querySelector('#searchText').value;
-
-    if (item != "" && item.length < 10 && item.length >= 3)
-    {
-        ipcRenderer.send('search:playerid', item);
-        background.style.display = "block";
-    }
-
-    if (item == "") 
-    {
-        ul.innerHTML = '';
-        background.style.display = "none";
-    }
-}
-
-ipcRenderer.on('search:clear', () =>
-{
-    ul.innerHTML = '';
-});
