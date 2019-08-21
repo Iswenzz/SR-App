@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({port: 8080});
+const Gamedig = require('gamedig');
 
 // -----------------------------------------------------
 // --------------------- MESSAGES ----------------------
@@ -9,40 +10,29 @@ const wss = new WebSocket.Server({port: 8080});
 
 wss.on('connection', (ws) =>
 {
-    console.log("Connected");
+    console.log("connected");
 
     ws.on('message', (message) =>
     {
         console.log('received: %s', message);
 
-        if (message.startsWith("mapsearch"))
+        switch (true)
         {
-            var arr = filterResults(getMaps(message));
-            ws.send(JSON.stringify(arr));
-        }
-
-        if (message.startsWith("maptime"))
-        {
-            getMapTimes(message, (arr) =>
-            {
-                ws.send(JSON.stringify(arr));
-            });
-        }
-
-        if (message.startsWith("playersearch"))
-        {
-            getIds(message, (arr) =>
-            {
-                ws.send(JSON.stringify(arr));
-            });
-        }
-
-        if (message.startsWith("playertimes"))
-        {
-            getPlayerTimes(message, (arr) =>
-            {
-                ws.send(JSON.stringify(arr));
-            });
+            case message.startsWith("mapsearch"): 
+                getMaps(message, (arr) => { ws.send(JSON.stringify(arr)); })
+                break;
+            case message.startsWith("maptime"):
+                getMapTimes(message, (arr) => { ws.send(JSON.stringify(arr)); });
+                break;
+            case message.startsWith("playersearch"):
+                getIds(message, (arr) => { ws.send(JSON.stringify(arr)); });
+                break;
+            case message.startsWith("playertimes"):
+                getPlayerTimes(message, (arr) => { ws.send(JSON.stringify(arr)); });
+                break;
+            case message.startsWith("server"):
+                getServerInfo(message, (arr) => { ws.send(JSON.stringify(arr)); });
+                break;
         }
     });  
 });
@@ -50,6 +40,50 @@ wss.on('connection', (ws) =>
 // -----------------------------------------------------
 // --------------------- RESPONSE ----------------------
 // -----------------------------------------------------
+
+function getServerInfo(message, done)
+{
+    let infoCount = 0;
+    let servers = [
+        { game: 'cod4', host: '213.32.18.205', port: 28960 },
+        { game: 'cod4', host: '213.32.18.205', port: 28962 },
+        { game: 'cod4', host: '213.32.18.205', port: 28964 }
+    ];
+    let responseArr = ["serverinfo"];
+
+    servers.forEach((serv) =>
+    {
+        Gamedig.query({
+            type: serv.game,
+            host: serv.host,
+            port: serv.port
+        }).then((state) => 
+        {
+            var reponse = serv.host + "\\"
+                + state.name + "\\"
+                + state.map + "\\";
+
+            state.players.forEach((player) => 
+            {
+                reponse += player.name.replace("\\", "/") + "\\";
+            });
+            responseArr[responseArr.length] = reponse;
+        }).catch((error) => 
+        {
+            console.log("server is offline");
+        }).finally(() =>
+        {
+            infoCount++;
+            sendServInfo();
+        });
+    });
+    
+    function sendServInfo()
+    {
+        if (infoCount == servers.length)
+            done(responseArr);
+    }
+}
 
 function getPlayerTimes(message, done)
 {
@@ -97,9 +131,7 @@ function getIds(message, done)
             var file = files[i].split(".")[0];
 
             if (file.startsWith(tkn[1]))
-            {
                 results[results.length] = file;
-            }
         }
     }
     done(results);
@@ -118,23 +150,18 @@ function getMapTimes(message, done)
         for(var i = 0; i<files.length; i++)
         {
             if (files[i].startsWith(tkn[1] + "_fastesttimes_"))
-            {
                 maps[maps.length] = files[i];
-            }
         }
     }
 
-    readTimes(maps, function (times)
-    {
-        done(times);
-    });
+    readTimes(maps, done);
 
     function readTimes(f, done)
     {
         var count = f.length;
         var times = ["mapresults"];
 
-        for(var i = 0; i<f.length; i++)
+        for(var i = 0; i < f.length; i++)
         {
             fs.readFile(path + "/" + f[i], { encoding: 'utf-8' }, function (err, data)
             {
@@ -144,26 +171,21 @@ function getMapTimes(message, done)
                     var lines = text.split("\n");
 
                     for(x = 0; x<lines.length; x++)
-                    {
                         times[times.length] = lines[x];
-                    }
 
                     count--;
 
                     if(count == 0)
                         done(times);
                 }
-
                 else 
-                {
                     console.log(err);
-                }
             });
         }
     }
 }
 
-function getMaps(message)
+function getMaps(message, done)
 {  
     var tkn = message.toLowerCase().split(":");
     var results = ["mapsearch"];
@@ -174,7 +196,7 @@ function getMaps(message)
         {
             var files = fs.readdirSync(__dirname + "/../map_times");
 
-            for (var i = 0; i<files.length; i++)
+            for (var i = 0; i < files.length; i++)
             {
                 var file = files[i].split(".")[0];
 
@@ -186,39 +208,35 @@ function getMaps(message)
             }
         }
     }
-    return results;
-}
 
-function filterResults(arr)
-{
-    var maps = [];
+    done(filterResults(results));
 
-    cont: for (var z = 0; z<arr.length; z++)
-    {
-        var tkn = arr[z].split("_");
-        var mapName = "";
+    function filterResults(arr) {
+        var maps = [];
 
-        for (i = 0; i<tkn.length; i++)
-        {
-            if (tkn[i] != "fastesttimes")
-            {
-                if(i == 0)
-                    mapName += tkn[i] + "_";
-                else if(i == 1)
-                    mapName += tkn[i];
-                else if(i > 1)
-                    mapName += "_" + tkn[i];
-            }    
-            else
-                break;
+        cont: for (var z = 0; z < arr.length; z++) {
+            var tkn = arr[z].split("_");
+            var mapName = "";
+
+            for (i = 0; i < tkn.length; i++) {
+                if (tkn[i] != "fastesttimes") {
+                    if (i == 0)
+                        mapName += tkn[i] + "_";
+                    else if (i == 1)
+                        mapName += tkn[i];
+                    else if (i > 1)
+                        mapName += "_" + tkn[i];
+                }
+                else
+                    break;
+            }
+
+            for (l = 0; l < maps.length; l++) {
+                if (maps[l] == mapName)
+                    continue cont;
+            }
+            maps[maps.length] = mapName;
         }
-
-        for(l = 0; l < maps.length; l++)
-        {
-            if(maps[l] == mapName)
-                continue cont;
-        }
-        maps[maps.length] = mapName;
+        return maps;
     }
-    return maps;
 }
