@@ -47,7 +47,7 @@ check_update();
 
 var connect = () =>
 {
-    ws = new WebSocket('ws://127.0.0.1:8080');
+    ws = new WebSocket('ws://213.32.18.205:8080');
 
     ws.on('open', () =>
     {
