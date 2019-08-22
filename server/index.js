@@ -45,9 +45,10 @@ function getServerInfo(message, done)
 {
     let infoCount = 0;
     let servers = [
-        { game: 'cod4', host: '213.32.18.205', port: 28960 },
-        { game: 'cod4', host: '213.32.18.205', port: 28962 },
-        { game: 'cod4', host: '213.32.18.205', port: 28964 }
+        { game: 'cod4',      host: '213.32.18.205',     port: 28960 },
+        { game: 'cod4',      host: '213.32.18.205',     port: 28962 },
+        { game: 'cod4',      host: '213.32.18.205',     port: 28964 },
+        { game: 'minecraft', host: '34.76.100.93',      port: 25565 }
     ];
     let responseArr = ["serverinfo"];
 
@@ -59,14 +60,28 @@ function getServerInfo(message, done)
             port: serv.port
         }).then((state) => 
         {
-            var reponse = serv.host + "\\"
-                + state.name + "\\"
-                + state.map + "\\";
-
-            state.players.forEach((player) => 
+            var response = "";
+            switch (serv.game)
             {
-                reponse += player.name.replace("\\", "/") + "\\";
-            });
+                case 'cod4':
+                    reponse = serv.game + "\\"
+                        + serv.host + ":" + serv.port + "\\"
+                        + state.name + "\\"
+                        + state.map + "\\";
+                    state.players.forEach((player) => {
+                        reponse += player.name.replace("\\", "/") + "\\";
+                    });
+                    break;
+                case 'minecraft':
+                    reponse = serv.game + "\\"
+                        + serv.host + ":" + serv.port + "\\"
+                        + state.raw.description.text + "\\"
+                        + "FTB Revelation+ 1.12.2\\";
+                    state.raw.players.sample.forEach((player) => {
+                        reponse += player.name.replace("\\", "/") + "\\";
+                    });
+                    break;
+            }
             responseArr[responseArr.length] = reponse;
         }).catch((error) => 
         {
