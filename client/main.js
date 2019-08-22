@@ -7,8 +7,8 @@ var ws;
 const { app, BrowserWindow, Menu, ipcMain, webContents} = electron;
 let mainWindow;
 let addWindow;
-// process.env.NODE_ENV = 'production';
-process.env.NODE_ENV = 'debug';
+process.env.NODE_ENV = 'production';
+// process.env.NODE_ENV = 'debug';
 
 // ----------------------------------------------------
 // --------------------- UPDATES ----------------------
@@ -16,7 +16,7 @@ process.env.NODE_ENV = 'debug';
 
 function check_update()
 {
-    var client_ver = "1.0";
+    var client_ver = "1.1";
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
     var rawFile = new XMLHttpRequest();
 
