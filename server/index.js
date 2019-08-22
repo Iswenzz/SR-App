@@ -77,9 +77,10 @@ function getServerInfo(message, done)
                         + serv.host + ":" + serv.port + "\\"
                         + state.raw.description.text + "\\"
                         + "FTB Revelation+ 1.12.2\\";
-                    state.raw.players.sample.forEach((player) => {
-                        reponse += player.name.replace("\\", "/") + "\\";
-                    });
+                    if (state.raw.players.sample !== undefined)
+                        state.raw.players.sample.forEach((player) => {
+                            reponse += player.name.replace("\\", "/") + "\\";
+                        });
                     break;
             }
             responseArr[responseArr.length] = reponse;
