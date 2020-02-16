@@ -2,50 +2,18 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 const WebSocket = require('ws');
+const { app, BrowserWindow, Menu, ipcMain} = electron;
 
-var ws;
-const { app, BrowserWindow, Menu, ipcMain, webContents} = electron;
+let ws;
 let mainWindow;
 let addWindow;
-process.env.NODE_ENV = 'production';
-// process.env.NODE_ENV = 'debug';
+process.env.NODE_ENV = true ? 'production' : 'debug';
 
-// ----------------------------------------------------
-// --------------------- UPDATES ----------------------
-// ----------------------------------------------------
+// -----------------------------------------------------
+// --------------------- WebSocket ---------------------
+// -----------------------------------------------------
 
-function check_update()
-{
-    var client_ver = "1.1";
-    var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-    var rawFile = new XMLHttpRequest();
-
-    rawFile.open("GET", "http://213.32.18.205:1337/speedrun_app/version.txt", true);
-    rawFile.onreadystatechange = () =>
-    {
-        if (rawFile.readyState === 4)
-        {
-            if (rawFile.status === 200 || rawFile.status == 0)
-                var serv_ver = rawFile.responseText;
-        }
-
-        if (parseFloat(client_ver) < parseFloat(serv_ver))
-        {
-            console.log('update');
-
-            var exec = require('child_process').exec;
-            exec('updater.exe', (error, stdout, stderr) => {});
-        }
-    }
-    rawFile.send(null);
-}
-check_update();
-
-// --------------------------------------------------
-// --------------------- CLIENT ---------------------
-// --------------------------------------------------
-
-var connect = () =>
+let connect = () =>
 {
     ws = new WebSocket('ws://213.32.18.205:8080');
 
@@ -72,8 +40,8 @@ var connect = () =>
 
         mainWindow.webContents.send('search:clear');
 
-        var index = 0;
-        var mode = "";
+        let index = 0;
+        let mode = "";
 
         JSON.parse(data, (key, value) => 
         {
@@ -105,12 +73,15 @@ var connect = () =>
         });
     });
 };
-connect();
 
 eval = global.eval = () =>
 {
     throw new Error(`Sorry, this app does not support window.eval().`);
 }
+
+// --------------------------------------------------
+// --------------------- CLIENT ---------------------
+// --------------------------------------------------
 
 app.on('ready', () =>
 {
@@ -122,14 +93,22 @@ app.on('ready', () =>
         'minHeight': 750,
         'minWidth': 600,
         frame: false,
+        show: false,
+        vibrancy: 'dark',
+        transparent: true
     });
-    
+
     mainWindow.loadURL(url.format(
     {
         pathname: path.join(__dirname, 'views/home.html'),
         protocol: 'file:',
         slashes: true
     }));
+
+    mainWindow.once('ready-to-show', () => 
+    {
+        mainWindow.show();
+    });
 
     mainWindow.on('closed', () =>
     {
@@ -143,10 +122,14 @@ app.on('ready', () =>
     Menu.setApplicationMenu(mainMenu);
 });
 
+// ----------------------------------------------------
+// --------------------- REQUESTS ---------------------
+// ----------------------------------------------------
+
 ipcMain.on('search:playerid', (e, item) =>
 {
     if (ws.readyState == 1)
-        ws.send("playersearch:"+item);
+        ws.send("playersearch:" + item);
 });
 
 ipcMain.on("getplayer", (e, item) =>
@@ -154,13 +137,13 @@ ipcMain.on("getplayer", (e, item) =>
     
     mainWindow.webContents.send('times:clear');
     if (ws.readyState == 1)
-        ws.send("playertimes:"+item);
+        ws.send("playertimes:" + item);
 });
 
 ipcMain.on('search:mapTimes', (e, item) =>
 {  
     if(ws.readyState == 1)
-        ws.send("mapsearch:"+item);
+        ws.send("mapsearch:" + item);
 });
 
 ipcMain.on('getmap', (e, item) =>
@@ -199,28 +182,21 @@ function createAddWindow()
     addWindow.on('close', () =>
     {
         addWindow = null;
-    })
+    });
 }
 
 const mainMenuTemplate = [{
     label:'File',
-    submenu: 
-    [{
+    submenu: [{
         label:'Add Item',
-        click(){
-            createAddWindow();
-        }
-    },
-    {
+        click() { createAddWindow(); }
+    },{
         label:'Clear Items'
-    },
-    {
+    },{
         label:'Quit',
         accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
         
-        click(){
-            app.quit();
-        }
+        click() { app.quit(); }
     }]
 }];
 
@@ -232,16 +208,14 @@ if(process.env.NODE_ENV != 'production')
     mainMenuTemplate.push(
     {
         label: 'Developer Tools',
-        submenu:
-        [{
+        submenu: [{
             label: 'Toggle DevTools',
             accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
-            click(item, focusedWindow){
-                focusedWindow.toggleDevTools();
-            }
-        },
-        {
+            click(item, focusedWindow) { focusedWindow.toggleDevTools(); }
+        },{
             role: 'reload'
         }]
-    })
+    });
 }
+
+connect();

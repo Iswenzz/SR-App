@@ -1,3 +1,11 @@
+.update {
+    position: absolute;
+    top: 70%;
+    width: 200px;
+    border-radius: 0% !important;
+    font-family: BankGothic;
+}
+
 .MultiCarousel { 
     float: left; 
     overflow: hidden; 

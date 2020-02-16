@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<title>Leaderboards</title>
 
@@ -8,29 +7,34 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"/>
 
-		<link rel="stylesheet" href="packages/css/bootstrap_theme.min.css" />
-		<link rel="stylesheet" href="packages/css/all.css" />
 		<link rel="stylesheet" href="css/leaderboard.css" />
 		<link rel="stylesheet" href="css/app.css" />
 
-		<script src="packages/js/jquery.min.js"></script>
-		<script src="packages/js/bootstrap.min.js"></script>
-
-		<div class="title-bar">
-			<div id="title-bar-btns">
-				<button id="close-btn">X</button>
-				<button id="max-btn">▢</button>
-				<button id="min-btn">−</button>
-			</div>
-		</div>
-
-		<div style="height:50px;"></div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	</head>
-
+	<nav>
+        <div class="title-bar">
+            <div id="title-bar-btns">
+                <button id="close-btn">X</button>
+                <button id="max-btn">▢</button>
+                <button id="min-btn">−</button>
+            </div>
+        </div>
+        <div class="navbar">
+            <a class="navtext" href="home.html">Home</a>
+            <a class="navtext" href="leaderboard.html">Leaderboards</a>
+            <a class="navtext" href="players.html">Player PB</a>
+            <a class="navtext" href="servers.html">Servers</a>
+        </div>
+    </nav>
 	<body data-spy="scroll" data-target="#quick-nav">
-
+		<div style="height:50px;"></div>
 		<div id="particles-js"></div>
 
 		<div class="searchBar rounded shadow-lg">
@@ -45,10 +49,11 @@
 		<div class="row">
 			<!-- Image/Name/Buttons col -->
 			<div class="col-4 text-center pl-5">
-				<img id="mapImage" class="img-fluid rounded shadow-lg">
+				<img id="mapImage" class="img-fluid rounded">
 				<h4 class="pt-2" id="mapName" style="font-family: BankGothic; font-size:1.6vw;"></h4>
+				<h5 class="pt-2" id="mapWay" style="font-family: BankGothic; font-size:1.6vw; color: silver"></h5>
 				<div style="height: 50px"></div>
-				<div class="shadow-lg" id="buttonContainer" style="display: none">
+				<div id="buttonContainer" style="display: none">
 					<div class="container-fluid">
 						<button class="btn btn-outline-primary m-1" speed="190" id="srspeedbutton"
 							style="font-family: Bankgothic">190</button>
@@ -70,17 +75,8 @@
 			</div>
 		</div>
 
-		<div class="navbar">
-			<a class="navtext" href="home.html">Home</a>
-			<a class="navtext" href="leaderboard.html">Leaderboards</a>
-			<a class="navtext" href="players.html">Player PB</a>
-			<a class="navtext" href="servers.html">Servers</a>
-		</div>
-
-		<script src="packages/js/particles.js"></script>
-		<script src="js/slideshow.js"></script>
-		<script src="js/maptimes.js"></script>
-		<script src="js/topbuttons.js"></script>
-
+		<script src="../src/utility/particles.js"></script>
+		<script src="../src/leaderboards/maptimes.js"></script>
+		<script src="../src/app/topbuttons.js"></script>
 	</body>
 </html>

@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 .searchBar {
     width: 98.5%;
     margin: 10px;

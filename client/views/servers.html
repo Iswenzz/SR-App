@@ -2,20 +2,22 @@
 <html>
     <head>
         <title>Servers</title>
+        
         <meta name="description" content="">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
-
-        <link rel="stylesheet" href="packages/css/bootstrap_theme.min.css"/>
-        <link rel="stylesheet" href="packages/css/all.css"/>
-        <link rel="stylesheet" href="packages/css/w3.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"/>
+        
         <link rel="stylesheet" href="css/app.css"/>
 
-        <script src="packages/js/jquery.min.js"></script>
-        <script src="packages/js/bootstrap.min.js"></script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <nav>
         <div class="title-bar">
             <div id="title-bar-btns">
                 <button id="close-btn">X</button>
@@ -23,24 +25,23 @@
                 <button id="min-btn">−</button>
             </div>
         </div>
-    </head>
-    <body data-spy="scroll" data-target="#quick-nav">
-
-        <div id="particles-js"></div>
-
-        <div style="height: 35vh"></div>
-        <div class="card-group pl-5 pr-5" id="serverList"></div>
-
         <div class="navbar">
             <a class="navtext" href="home.html">Home</a>
             <a class="navtext" href="leaderboard.html">Leaderboards</a>
             <a class="navtext" href="players.html">Player PB</a>
             <a class="navtext" href="servers.html">Servers</a>
         </div>
+    </nav>
+    <body data-spy="scroll" data-target="#quick-nav">
+        <div id="particles-js"></div>
+        <div style="height: 10vh"></div>
 
-        <script src="packages/js/particles.js"></script>
-        <script src="js/topbuttons.js"></script>
-        <script src="js/cod4servers.js"></script>
-    
+        <div class="container">
+            <div class="row" id="serverList"></div>
+        </div>
+
+        <script src="../src/utility/particles.js"></script>
+        <script src="../src/app/topbuttons.js"></script>
+        <script src="../src/tracker/servers.js"></script>
     </body>
 </html>

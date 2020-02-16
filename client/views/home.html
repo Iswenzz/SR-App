@@ -2,57 +2,56 @@
 <html>
     <head>
 		<title>Home</title>
-		
+
 		<meta name="description" content="">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
-		<script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
 
-		<link rel="stylesheet" href="packages/css/bootstrap_theme.min.css"/>
-		<link rel="stylesheet" href="packages/css/all.css"/>
-		<link rel="stylesheet" href="packages/css/w3.css" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"/>
+		
 		<link rel="stylesheet" href="css/app.css"/>
 		<link rel="stylesheet" href="css/home.css"/>
 
-		<script src="packages/js/jquery.min.js"></script>
-		<script src="packages/js/bootstrap.min.js"></script>
-
-		<div class="title-bar">
-			<div id="title-bar-btns">
-				<button id="close-btn">X</button>
-				<button id="max-btn">▢</button>
-				<button id="min-btn">−</button>
-			</div>
-		</div>
-		
-		<div style="height: 85px;"></div>
-  	</head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<nav>
+        <div class="title-bar">
+            <div id="title-bar-btns">
+                <button id="close-btn">X</button>
+                <button id="max-btn">▢</button>
+                <button id="min-btn">−</button>
+            </div>
+        </div>
+        <div class="navbar">
+            <a class="navtext" href="home.html">Home</a>
+            <a class="navtext" href="leaderboard.html">Leaderboards</a>
+            <a class="navtext" href="players.html">Player PB</a>
+            <a class="navtext" href="servers.html">Servers</a>
+        </div>
+    </nav>
 	<body data-spy="scroll" data-target="#quick-nav">
-
-		<div w3-include-html="http://213.32.18.205:1337/speedrun_app/views/z_home.html"></div>
-		<!-- <div w3-include-html="z_home.html"></div> -->
-
+		<div style="padding-top: 80px;" w3-include-html="https://iswenzz.com:1337/speedrun_app/views/z_home.html"></div>
+		<!-- <div style="padding-top: 80px;" w3-include-html="z_home.html"></div> -->
 		<div id="particles-js"></div>
 
-		<div class="navbar">
-			<a class="navtext" href="home.html">Home</a>
-			<a class="navtext" href="leaderboard.html">Leaderboards</a>
-			<a class="navtext" href="players.html">Player PB</a>
-			<a class="navtext" href="servers.html">Servers</a>
-		</div>
-		
-		<script src="packages/js/particles.js"></script>
-        <script src="js/youtube.js"></script>
-		<script src="js/include.js"></script>
-		<script src="js/home.js"></script>
-		<script src="js/topbuttons.js"></script>
-		<script src="js/open.js"></script>
-		
+		<button class="update btn btn-danger" id="update-button" opn="https://github.com/Iswenzz/SR-App/releases" 
+		style="display: none;">
+		Update available
+		</button>
+
+		<script src="../src/utility/particles.js"></script>
+        <script src="../src/utility/youtube.js"></script>
+		<script src="../src/utility/include.js"></script>
+		<script src="../src/utility/open.js"></script>
+		<script src="../src/app/topbuttons.js"></script>
+		<script src="../src/home.js"></script>
 	</body>
 	<footer>
-		<div style="height: 40px;"></div>
-		<div class="row">
+		<div class="row p-1">
 			<div class="col-md-12 shadow-p text-center">
 				<button class="btn btn-outline-danger btn-circle btn-circle-lg m-1" opn="https://www.youtube.com/c/iswenzz">
 					<i class="fab fa-youtube"></i>
@@ -65,6 +64,5 @@
 				</button>
 			</div>
 		</div>
-		<div style="height: 40px;"></div>
 	</footer>
 </html>

@@ -1,15 +1,26 @@
 @import url("../fonts/stylesheet.css");
 
-body {
+html, body {
     overflow-x: hidden;
 }
 
+body {
+    background-color: #282828;
+    background-image: url("../assets/images/bg.png");
+}
+
+*:not(i) {
+    color: #aeaeae;
+}
+
 .navbar {
+    padding-top: 20px;
     overflow: hidden;
     background-color: #202122;
     position: fixed;
     top: 0px;
     width: 100%;
+    z-index: 400;
 }
 
 .navbar a {
@@ -39,8 +50,8 @@ body {
     height: 20px;
     -webkit-app-region: drag;
     cursor: move;
-    background-color: #202122;
-    z-index:2;
+    background-color: #191919;
+    z-index: 800;
 }
 
 #title-bar-btns {
@@ -55,9 +66,9 @@ body {
     cursor:pointer;
     width: 20px;
     height: auto;
-    background-color: #202225;
+    background-color: #191919;
     color: #e9ecef;
-    border: solid 1px #202225;
+    border: solid 1px #191919;
     text-align: center;
     float: right;
     padding: 3px;
@@ -84,10 +95,6 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: #5b5f66;
-}
-
-body {
-    background-image: url("../images/bg.png");
 }
 
 #particles-js {
