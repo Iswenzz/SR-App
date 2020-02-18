@@ -94,8 +94,7 @@ app.on('ready', () =>
         'minWidth': 600,
         frame: false,
         show: false,
-        vibrancy: 'dark',
-        transparent: true
+        vibrancy: 'dark'
     });
 
     mainWindow.loadURL(url.format(
