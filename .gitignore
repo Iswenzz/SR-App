@@ -10,3 +10,5 @@ map_times/
 personbest/
 
 client/views/images/loadscreen/
+
+client/coverage/

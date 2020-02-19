@@ -2,18 +2,16 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 const WebSocket = require('ws');
-const { app, BrowserWindow, Menu, ipcMain} = electron;
+const { app, BrowserWindow, ipcMain} = electron;
 
 let ws;
 let mainWindow;
-let addWindow;
-process.env.NODE_ENV = true ? 'production' : 'debug';
 
 // -----------------------------------------------------
 // --------------------- WebSocket ---------------------
 // -----------------------------------------------------
 
-let connect = () =>
+const connect = () =>
 {
     ws = new WebSocket('ws://213.32.18.205:8080');
 
@@ -92,14 +90,15 @@ app.on('ready', () =>
         'height': 800,
         'minHeight': 750,
         'minWidth': 600,
-        frame: false,
+        frame: true,
         show: false,
         vibrancy: 'dark'
     });
+    mainWindow.setMenu(null);
 
     mainWindow.loadURL(url.format(
     {
-        pathname: path.join(__dirname, 'views/home.html'),
+        pathname: path.join(__dirname, '../views/home.html'),
         protocol: 'file:',
         slashes: true
     }));
@@ -114,11 +113,8 @@ app.on('ready', () =>
         app.quit();
     });
 
-    if (process.env.NODE_ENV == "debug")
+    if (process.env.NODE_ENV === "debug")
         mainWindow.webContents.openDevTools();
-
-    const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-    Menu.setApplicationMenu(mainMenu);
 });
 
 // ----------------------------------------------------
@@ -157,64 +153,5 @@ ipcMain.on('getserver', (e, item) =>
     if (ws.readyState == 1)
         ws.send("servers:null");
 });
-
-// ----------------------------------------------------
-// --------------------- DEV TOOL ---------------------
-// ----------------------------------------------------
-
-function createAddWindow()
-{
-    addWindow = new BrowserWindow(
-    {
-        width: 300,
-        height: 200,
-        title:'Add map'
-    });
-
-    addWindow.loadURL(url.format(
-    {
-        pathname: path.join(__dirname, ''),
-        protocol: 'file:',
-        slashes: true
-    }));
-
-    addWindow.on('close', () =>
-    {
-        addWindow = null;
-    });
-}
-
-const mainMenuTemplate = [{
-    label:'File',
-    submenu: [{
-        label:'Add Item',
-        click() { createAddWindow(); }
-    },{
-        label:'Clear Items'
-    },{
-        label:'Quit',
-        accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-        
-        click() { app.quit(); }
-    }]
-}];
-
-if(process.platform == 'darwin')
-    mainMenuTemplate.unshift({ });
-
-if(process.env.NODE_ENV != 'production')
-{
-    mainMenuTemplate.push(
-    {
-        label: 'Developer Tools',
-        submenu: [{
-            label: 'Toggle DevTools',
-            accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
-            click(item, focusedWindow) { focusedWindow.toggleDevTools(); }
-        },{
-            role: 'reload'
-        }]
-    });
-}
 
 connect();

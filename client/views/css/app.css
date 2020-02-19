@@ -14,7 +14,6 @@ body {
 }
 
 .navbar {
-    padding-top: 20px;
     overflow: hidden;
     background-color: #202122;
     position: fixed;
