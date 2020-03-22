@@ -92,7 +92,8 @@ app.on('ready', () =>
         'minWidth': 600,
         frame: true,
         show: false,
-        vibrancy: 'dark'
+        vibrancy: 'dark',
+        darkTheme: true
     });
     mainWindow.setMenu(null);
 
