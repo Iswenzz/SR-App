@@ -2,7 +2,9 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/iswenzz/sr-app/badge)](https://www.codefactor.io/repository/github/iswenzz/sr-app)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-This application was created for the sole purpose of convenience for the players. Things like being able to view the current map on the game server, see the currently connected users, view your best times as well as other's, check world records, et cetera, are all available without even having to open Call of Duty 4. Other major points of this application include being updated with all of the latest announcements and updates occurring on the server right on the home page for the most convenient experience.
+This application was created for the sole purpose of convenience for the players. Such as being able to view the current map on the game server, see all current connected users, view your best times as well as others, and check world records. 
+
+All the listed are available without even having to open Call of Duty 4. Other major points of this application include, being updated with all of the latest announcements and all updates occurring on the server right on the home page, for the most convenient experience.
 
 ![](https://i.imgur.com/IKAVwOe.jpg)
 
