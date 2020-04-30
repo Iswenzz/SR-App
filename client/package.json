@@ -24,7 +24,7 @@
   "electron": "^2.0.18",
   "electron-packager": "^12.2.0",
   "execSync": "^1.0.2",
-  "jquery": "^3.4.1",
+  "jquery": "^3.5.0",
   "opn": "^5.5.0",
   "particles.js": "^2.0.0",
   "ws": "^5.2.2",
