@@ -27,7 +27,7 @@
   "jquery": "^3.4.1",
   "opn": "^5.5.0",
   "particles.js": "^2.0.0",
-  "ws": "^5.2.2",
+  "ws": "^7.4.5",
   "xmlhttprequest": "^1.8.0"
  },
  "devDependencies": {
